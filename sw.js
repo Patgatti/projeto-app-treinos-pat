@@ -1,7 +1,9 @@
 // Guarda o app para abrir rápido. Busca a versão nova na internet primeiro
 // e só usa a cópia guardada se estiver sem conexão.
-const CACHE = 'treino-v1';
-const ARQUIVOS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
+const CACHE = 'treino-v2';
+const ARQUIVOS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png',
+  './fonts/dmsans-400.woff', './fonts/dmsans-500.woff', './fonts/dmsans-600.woff', './fonts/dmsans-700.woff',
+  './fonts/manrope-600.woff', './fonts/manrope-700.woff', './fonts/manrope-800.woff'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ARQUIVOS)).then(() => self.skipWaiting()));

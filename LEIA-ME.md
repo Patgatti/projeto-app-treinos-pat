@@ -4,11 +4,14 @@ Musculação e ballet em um app que roda no navegador e se instala na tela inici
 
 ## O que já funciona
 
-- **Hoje:** mostra os treinos marcados para o dia da semana, com a barra de séries feitas.
+- **Hoje:** meta do mês (conta sozinha os dias com série ou aula registrada; você só edita a meta) e os treinos marcados para o dia, com a barra de séries feitas.
 - **Treino e exercício:** nome, link do vídeo, regulagem do aparelho (texto livre, salva sozinha), séries com carga e repetições, cronômetro de descanso e sugestão de carga.
 - **Ballet:** exercícios cadastrados como os da musculação (sem carga) e registro da aula do dia (duração, como foi, anotação).
 - **Evolução:** gráfico da carga máxima por dia de treino, por exercício.
 - **Treinos:** criar, editar, reordenar e excluir treinos e exercícios.
+- **Tema:** segue o iPhone por padrão; em Ajustes dá para forçar claro ou escuro.
+- **Letras:** os treinos são A, B, C… pela ordem da lista (mudam se você reordenar ou apagar).
+- **Fontes:** DM Sans e Manrope ficam na pasta `fonts` (licença OFL), sem depender do Google.
 - **Backup:** exportar e importar um arquivo JSON.
 - **Sincronização:** opcional, via Supabase (veja abaixo). Não foi testada contra um projeto Supabase real.
 
@@ -43,7 +46,7 @@ Alternativas: Netlify ou Cloudflare Pages (arraste a pasta e pronto).
 4. Em Project Settings > API, copie a **Project URL** e a chave **anon public**.
 5. No app, abra Ajustes e preencha URL, chave, e-mail e senha. Toque em Entrar. Repita nos dois aparelhos.
 
-Como a sincronização funciona: os registros de séries e aulas dos dois aparelhos são juntados. O cadastro de treinos e exercícios fica com a versão editada mais recentemente. Excluir um registro de série ainda não é possível no app.
+Como a sincronização funciona: os registros de séries e aulas dos dois aparelhos são juntados. O cadastro de treinos e exercícios fica com a versão editada mais recentemente. Desfazer uma série (tocar em "Série concluída") também é sincronizado.
 
 ## 4. Lembrete ao chegar na academia
 
