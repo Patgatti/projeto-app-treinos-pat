@@ -46,7 +46,7 @@
 }
 .is-ballet{--accent:var(--ballet);--accent-soft:var(--ballet-soft)}
 
-*,::before,::after{box-sizing:border-box;border:0 solid;-webkit-tap-highlight-color:transparent}
+*,::before,::after{box-sizing:border-box;border:0 solid;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;min-height:100vh;background:var(--bg);color:var(--text);font-family:var(--f-body);font-size:16px;line-height:1.5;font-synthesis:none}
 h1,h2,p,ol{margin:0}
@@ -80,6 +80,12 @@ h1{margin-top:8px;font-size:clamp(35px,10vw,46px);line-height:1.02;letter-spacin
 .primary-button:disabled{opacity:.45;cursor:not-allowed}
 .primary-button.ballet-button{background:var(--ballet)}
 .bottom-action{margin-top:24px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{min-height:44px;padding:0 16px;border:1px solid var(--border);border-radius:13px;background:var(--bg);font-size:14px;font-weight:800}
+.chips button.selected{border-color:var(--accent);background:var(--accent);color:#fff}
+.done-banner{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:20px;padding:14px 14px 14px 18px;border-radius:20px;background:color-mix(in srgb,var(--success) 14%,var(--surface));color:var(--success);font-weight:800}
+.done-banner>span{display:flex;align-items:center;gap:8px}
+.done-banner button{min-height:44px;padding:0 15px;border-radius:12px;background:var(--surface);color:var(--text);font-weight:800}
 .workout-list+.primary-button{margin-top:18px}
 
 /* ---------- Hoje ---------- */
@@ -314,7 +320,7 @@ h1{margin-top:8px;font-size:clamp(35px,10vw,46px);line-height:1.02;letter-spacin
 .bottom-nav a span{font-size:11px;font-weight:800}
 .bottom-nav a[aria-current="page"]{color:var(--accent)}
 .bottom-nav a[aria-current="page"]::before{content:"";position:absolute;top:4px;width:54px;height:35px;border-radius:14px;background:var(--accent-soft);z-index:-1}
-#toast{position:fixed;z-index:14;left:50%;bottom:calc(98px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);max-width:calc(100% - 36px);padding:12px 18px;border-radius:14px;background:var(--text);color:var(--bg);font-weight:700;opacity:0;pointer-events:none;transition:opacity .2s}
+#toast{position:fixed;z-index:14;left:50%;bottom:calc(98px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);width:max-content;max-width:calc(100% - 36px);text-align:center;padding:12px 18px;border-radius:14px;background:var(--text);color:var(--bg);font-weight:700;opacity:0;pointer-events:none;transition:opacity .2s}
 #toast.on{opacity:1}
 </style>
 </head>
@@ -400,13 +406,13 @@ function semente() {
       { id: uid(), nome: 'Superiores', frente: 'Musculação', dias: [2, 5], exercicios: [ex('Puxada frontal', 3, 10, 90, 2.5), ex('Remada baixa', 3, 10, 90, 2.5), ex('Supino na máquina', 3, 10, 90, 2.5)] },
       { id: uid(), nome: 'Ballet', frente: 'Ballet', dias: [1, 2, 3, 4, 5], exercicios: [ex('Aquecimento dos pés', 2, 15, 30, 0), ex('Alongamento de posterior', 2, 30, 20, 0)] }
     ] },
-    logs: [], aulas: [] };
+    logs: [], aulas: [], conclusoes: [] };
 }
 function carregar() {
   try {
     const r = JSON.parse(lsGet(KEY));
     if (r && r.plan && Array.isArray(r.plan.treinos)) {
-      r.logs = r.logs || []; r.aulas = r.aulas || [];
+      r.logs = r.logs || []; r.aulas = r.aulas || []; r.conclusoes = r.conclusoes || [];
       r.plan.meta = r.plan.meta > 0 ? r.plan.meta : 12;
       return r;
     }
@@ -419,6 +425,7 @@ const treinoPorId = id => S.plan.treinos.find(t => t.id === id);
 function acharEx(id) { for (const t of S.plan.treinos) { const e = t.exercicios.find(x => x.id === id); if (e) return { t, e }; } return null; }
 const logsDe = (exId, data) => S.logs.filter(l => !l.del && l.exId === exId && (!data || l.data === data));
 const feitasHoje = e => new Set(logsDe(e.id, hoje()).map(l => l.serie)).size;
+const concluidoHoje = t => S.conclusoes.find(c => !c.del && c.tid === t.id && c.data === hoje());
 const letra = t => String.fromCharCode(65 + Math.max(0, S.plan.treinos.indexOf(t)));
 const tituloTreino = t => t.frente === 'Ballet' ? t.nome : `Treino ${letra(t)} · ${t.nome}`;
 const diasTxt = (t, sep = ', ') => ORDEM_DIAS.filter(i => t.dias.includes(i)).map(i => DIAS[i]).join(sep);
@@ -442,6 +449,7 @@ function treinosDoMes() {
   const d = new Date(), pre = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-`, dias = new Set();
   for (const l of S.logs) if (!l.del && l.data.startsWith(pre)) dias.add(l.data);
   for (const a of S.aulas) if (a.data.startsWith(pre)) dias.add(a.data);
+  for (const c of S.conclusoes) if (!c.del && c.data.startsWith(pre)) dias.add(c.data);
   return dias.size;
 }
 
@@ -507,8 +515,9 @@ function metaCard() {
 function cartaoPlano(t) {
   const total = t.exercicios.reduce((s, e) => s + e.series, 0);
   const feitas = t.exercicios.reduce((s, e) => s + Math.min(feitasHoje(e), e.series), 0);
-  const pct = total ? Math.round(feitas / total * 100) : 0, ball = t.frente === 'Ballet';
-  const estado = total && feitas >= total ? 'Concluído' : feitas > 0 ? 'Em andamento' : 'Começar';
+  const conc = !!concluidoHoje(t), ball = t.frente === 'Ballet';
+  const pct = conc ? 100 : (total ? Math.round(feitas / total * 100) : 0);
+  const estado = conc || (total && feitas >= total) ? 'Concluído' : feitas > 0 ? 'Em andamento' : 'Começar';
   return `<a class="plan-card ${ball ? 'ballet' : 'strength'}" href="#/treino/${t.id}"><span class="plan-type">${esc(t.frente.toUpperCase())}</span><strong>${esc(tituloTreino(t))}</strong><p>${plural(t.exercicios.length, 'exercício', 'exercícios')} · ${feitas} de ${plural(total, 'série', 'séries')}</p><div class="hero-progress"><span style="width:${pct}%"></span></div><div class="hero-footer"><b>${estado}</b>${ic('chevron')}</div></a>`;
 }
 function aulaCard() {
@@ -555,6 +564,9 @@ function vTreino(r) {
     });
     h += '</div></section>';
   }
+  if (t.exercicios.length) h += concluidoHoje(t)
+    ? `<div class="done-banner"><span>${ic('check', 20)} Treino concluído hoje</span><button type="button" data-act="desfazer-conclusao" data-tid="${t.id}">Desfazer</button></div>`
+    : `<button type="button" class="primary-button bottom-action" data-act="concluir-treino" data-tid="${t.id}">${ic('check')} Concluir treino</button>`;
   if (ball) h += aulaCard();
   return envolver(t, h);
 }
@@ -574,7 +586,7 @@ function vExercicio(r) {
   h += `<section class="machine-card"><span class="machine-icon">${ic('settings', 22)}</span><div><small>REGULAGEM DO APARELHO</small><textarea id="regul" class="auto" rows="1" data-bind="regulagem" data-eid="${e.id}" aria-label="Regulagem do aparelho" placeholder="Toque para anotar: banco, apoio, pegada…">${esc(e.regulagem)}</textarea></div></section>`;
   if (comPeso) {
     h += `<section class="suggestion-card"><span class="kicker">SUGESTÃO DE CARGA</span><strong>${esc(sug.titulo)}</strong><p>${esc(sug.detalhe)}</p></section>`;
-    h += `<section class="current-load" data-eid="${e.id}"><div class="section-heading compact"><h2>Carga de hoje</h2><span>kg</span></div>${contador({ valor: cargaBase, unit: 'kg', campo: 'carga', step: passo, rot: 'Carga de hoje em quilos' })}${sug.peso != null ? `<button type="button" data-act="usar-sugestao" data-peso="${sug.peso}">Usar sugestão (${fmt(sug.peso)} kg)</button>` : ''}</section>`;
+    h += `<section class="current-load" data-eid="${e.id}"><div class="section-heading compact"><h2>Carga de hoje</h2><span>passo de ${fmt(passo)} kg</span></div>${contador({ valor: cargaBase, unit: 'kg', campo: 'carga', step: passo, rot: 'Carga de hoje em quilos' })}${sug.peso != null ? `<button type="button" data-act="usar-sugestao" data-peso="${sug.peso}">Usar sugestão (${fmt(sug.peso)} kg)</button>` : ''}</section>`;
   }
   h += `<section class="sets-section"><div class="section-heading compact"><h2>Séries de hoje</h2><span class="sets-count">${nFeitas}/${e.series} feitas</span></div>`;
   for (let i = 1; i <= e.series; i++) {
@@ -656,7 +668,9 @@ function vExEditar(r) {
   let h = cabecalho({ titulo: novo ? 'Novo exercício' : e.nome, voltarBtn: true });
   h += `<section class="exercise-form-card"><label for="x-nome">Nome</label><input id="x-nome" value="${esc(e.nome)}" placeholder="Nome do exercício" autocomplete="off"><label for="x-video">Link do vídeo de explicação</label><input id="x-video" value="${esc(e.video)}" placeholder="https://youtu.be/…" inputmode="url" autocapitalize="off" autocomplete="off"></section>
   <section class="exercise-form-section"><h2>Séries e descanso</h2><div class="exercise-form-card form-grid-three"><div><label for="x-series">Séries</label><input id="x-series" inputmode="numeric" value="${e.series}"></div><div><label for="x-reps">Repetições</label><input id="x-reps" inputmode="numeric" value="${e.reps}"></div><div><label for="x-desc">Descanso (s)</label><input id="x-desc" inputmode="numeric" value="${e.descanso}"></div></div></section>`;
-  if (comPeso) h += `<section class="exercise-form-section"><h2>Carga</h2><div class="exercise-form-card load-form"><div class="form-grid-two"><div><label for="x-carga">Carga atual (kg)</label><input id="x-carga" inputmode="decimal" value="${fmt(e.carga || 0)}"></div><div><label for="x-passo">Subir (kg)</label><input id="x-passo" inputmode="decimal" value="${fmt(e.passo)}"></div></div><p>Quando você fechar todas as séries e repetições, o app sugere somar o valor de “Subir” à carga atual. Esse valor também é o tamanho do passo dos botões + e −.</p></div></section>`;
+  if (comPeso) h += `<section class="exercise-form-section"><h2>Carga</h2><div class="exercise-form-card load-form"><div class="form-grid-two"><div><label for="x-carga">Carga atual (kg)</label><input id="x-carga" inputmode="decimal" value="${fmt(e.carga || 0)}"></div><div><label for="x-passo">Sobe de … em … (kg)</label><input id="x-passo" inputmode="decimal" value="${fmt(e.passo)}"></div></div>
+    <div class="chips" id="chips-passo">${[1, 2.5, 5, 10].map(v => `<button type="button" data-act="chip-passo" data-v="${v}" class="${num(e.passo) === v ? 'selected' : ''}">${fmt(v)} kg</button>`).join('')}</div>
+    <p>É o tamanho do degrau da máquina: 10 nas que sobem de 10 em 10, 2,5 nas que sobem de 2,5 em 2,5. O app usa esse valor nos botões + e − e na sugestão de aumento de carga.</p></div></section>`;
   h += `<section class="exercise-form-section"><h2>Regulagem do aparelho</h2><textarea id="x-regul" placeholder="Anote banco, apoio, pegada e outras regulagens">${esc(e.regulagem)}</textarea></section>`;
   if (!novo) h += `<div class="danger-zone"><button type="button" data-act="pedir-excluir" data-alvo="ex" data-tid="${t.id}" data-eid="${e.id}">${ic('trash', 20)} Excluir exercício</button></div>`;
   h += `<button type="button" class="primary-button bottom-action" id="btn-salvar-ex" data-act="salvar-ex" data-tid="${t.id}" data-eid="${eid}" ${e.nome.trim() ? '' : 'disabled'}>${ic('check')} ${novo ? 'Adicionar exercício' : 'Salvar exercício'}</button>`;
@@ -669,6 +683,13 @@ function temaCard() {
   return `<section class="settings-card theme-card"><div class="settings-card-row"><span class="machine-icon">${ic(escuroAgora() ? 'moon' : 'sun')}</span><div><strong>Tema do app</strong><p>${nomes[temaPref]}</p></div></div>
     <div class="seg" role="group" aria-label="Tema">${[['auto', 'Automático'], ['light', 'Claro'], ['dark', 'Escuro']].map(([v, n]) => `<button type="button" data-act="tema" data-v="${v}" aria-pressed="${temaPref === v}">${n}</button>`).join('')}</div></section>`;
 }
+function senhaCard() {
+  return `<section class="settings-section"><div class="settings-section-heading"><span class="settings-section-icon">${ic('lock', 20)}</span><div><h2>Trocar senha</h2><p>Define uma nova senha para a conta do Supabase. Nos outros aparelhos, entre de novo com a senha nova.</p></div></div>
+    <div class="sync-form"><label for="n-pass">Nova senha</label><input id="n-pass" type="password" autocomplete="new-password" placeholder="Mínimo de 6 caracteres">
+      <label for="n-pass2">Repetir a nova senha</label><input id="n-pass2" type="password" autocomplete="new-password">
+      <div class="settings-actions"><button type="button" class="settings-primary-action" data-act="trocar-senha">${ic('check', 18)} Trocar senha</button></div>
+      <p class="connection-status" id="senha-status" hidden><span class="dot"></span><span class="txt"></span></p></div></section>`;
+}
 const urlApp = () => location.href.split('#')[0] + '#/hoje';
 function vAjustes() {
   const logado = !!sync.access;
@@ -677,10 +698,11 @@ function vAjustes() {
   <section class="settings-section"><div class="settings-section-heading"><span class="settings-section-icon">${ic('lock', 20)}</span><div><h2>Sincronizar iPhone e iPad</h2><p>Use o mesmo projeto Supabase e a mesma conta nos dois aparelhos. O passo a passo está no arquivo LEIA-ME.</p></div></div>
     <div class="sync-form"><label for="s-url">URL do projeto</label><input id="s-url" inputmode="url" placeholder="https://xxxx.supabase.co" value="${esc(sync.url || '')}" autocapitalize="off" autocorrect="off" spellcheck="false">
       <label for="s-key">Chave anon (pública)</label><input id="s-key" value="${esc(sync.key || '')}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
-      <label for="s-email">E-mail</label><input id="s-email" type="email" inputmode="email" autocomplete="username" value="${esc(sync.email || '')}">
+      <label for="s-email">E-mail</label><input id="s-email" type="email" inputmode="email" autocomplete="username" autocapitalize="off" autocorrect="off" spellcheck="false" value="${esc(sync.email || '')}">
       <label for="s-pass">Senha</label><input id="s-pass" type="password" autocomplete="current-password">
       <div class="settings-actions"><button type="button" class="settings-primary-action" data-act="entrar">${ic(logado ? 'check' : 'lock', 18)} ${logado ? 'Entrar de novo' : 'Entrar'}</button>${logado ? `<button type="button" class="settings-primary-action sec" data-act="sync-agora">Sincronizar agora</button><button type="button" class="settings-primary-action out" data-act="sair">Sair</button>` : ''}</div>
       <p class="connection-status ${syncErro ? 'erro' : logado ? 'connected' : ''}" id="sync-status"><span class="dot"></span><span class="txt">${esc(msg)}</span></p></div></section>
+  ${logado ? senhaCard() : ''}
   <section class="settings-section"><div class="settings-section-heading"><span class="settings-section-icon">${ic('download', 20)}</span><div><h2>Backup</h2><p>Exporte uma cópia ou restaure seus dados salvos. O iOS pode apagar os dados de sites que ficam muito tempo sem uso.</p></div></div>
     <div class="backup-actions"><button type="button" data-act="exportar">${ic('download', 19)} Exportar backup</button><label for="imp">${ic('upload', 19)} Importar backup<input id="imp" type="file" accept="application/json"></label></div></section>
   <section class="settings-section"><div class="settings-section-heading"><span class="settings-section-icon">${ic('calendar', 20)}</span><div><h2>Lembrete ao chegar na academia</h2><p>Crie uma automação no app Atalhos para abrir o treino ao chegar.</p></div></div>
@@ -690,7 +712,31 @@ function vAjustes() {
 
 /* ---------- descanso entre séries ---------- */
 let restFim = 0, restTotal = 0, restId = null, audioCtx = null;
-function bip() {
+let beepEl = null, wake = null;
+function wavBeep() {
+  const sr = 22050, n = Math.floor(sr * 1.4), buf = new ArrayBuffer(44 + n * 2), v = new DataView(buf);
+  const w = (o, t) => { for (let i = 0; i < t.length; i++) v.setUint8(o + i, t.charCodeAt(i)); };
+  w(0, 'RIFF'); v.setUint32(4, 36 + n * 2, true); w(8, 'WAVE'); w(12, 'fmt '); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+  v.setUint32(24, sr, true); v.setUint32(28, sr * 2, true); v.setUint16(32, 2, true); v.setUint16(34, 16, true); w(36, 'data'); v.setUint32(40, n * 2, true);
+  for (let i = 0; i < n; i++) {
+    const t = i / sr, k = t % 0.45, on = k < 0.25 && t < 1.35, env = on ? Math.min(1, k * 40, (0.25 - k) * 40) : 0;
+    v.setInt16(44 + i * 2, Math.sin(2 * Math.PI * 880 * t) * env * 0.7 * 32767, true);
+  }
+  let bin = ''; const u = new Uint8Array(buf); for (let i = 0; i < u.length; i++) bin += String.fromCharCode(u[i]);
+  return 'data:audio/wav;base64,' + btoa(bin);
+}
+/* Chamado num toque do usuário: deixa o som liberado e tocando mesmo no modo silencioso do iPhone. */
+function prepararSom() {
+  try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {}
+  try {
+    if (!beepEl) { beepEl = new Audio(wavBeep()); beepEl.preload = 'auto'; }
+    beepEl.muted = true;
+    const p = beepEl.play();
+    if (p && p.then) p.then(() => { beepEl.pause(); beepEl.currentTime = 0; beepEl.muted = false; }).catch(() => { beepEl.muted = false; });
+  } catch (e) {}
+  try { audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)(); if (audioCtx.state === 'suspended') audioCtx.resume(); } catch (e) {}
+}
+function bipCtx() {
   try {
     audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
     const o = audioCtx.createOscillator(), g = audioCtx.createGain();
@@ -698,18 +744,23 @@ function bip() {
     o.start(); o.stop(audioCtx.currentTime + .25);
   } catch (e) {}
 }
+function bip() {
+  try { beepEl.muted = false; beepEl.currentTime = 0; const p = beepEl.play(); if (p && p.catch) p.catch(bipCtx); } catch (e) { bipCtx(); }
+}
+async function manterTela() { try { if (navigator.wakeLock && !wake) { wake = await navigator.wakeLock.request('screen'); wake.addEventListener('release', () => { wake = null; }); } } catch (e) {} }
+function soltarTela() { try { wake && wake.release(); } catch (e) {} wake = null; }
 function iniciarDescanso(seg) {
   if (!seg || seg < 1) return;
-  try { audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)(); if (audioCtx.state === 'suspended') audioCtx.resume(); } catch (e) {}
+  prepararSom(); manterTela();
   restTotal = seg; restFim = Date.now() + seg * 1000;
   $('#rest').hidden = false; document.body.classList.add('timer-on'); $('#rest-txt').textContent = 'DESCANSO';
   clearInterval(restId); restId = setInterval(tickDescanso, 250); tickDescanso();
 }
-function esconderDescanso() { clearInterval(restId); restId = null; $('#rest').hidden = true; document.body.classList.remove('timer-on'); }
+function esconderDescanso() { soltarTela(); clearInterval(restId); restId = null; $('#rest').hidden = true; document.body.classList.remove('timer-on'); }
 function tickDescanso() {
   const falta = Math.ceil((restFim - Date.now()) / 1000);
   if (falta <= 0) {
-    clearInterval(restId); restId = null;
+    clearInterval(restId); restId = null; soltarTela();
     $('#rest-time').textContent = '0:00'; $('#rest-txt').textContent = 'DESCANSO CONCLUÍDO'; $('#rest-ring').style.setProperty('--progress', '0deg');
     bip(); try { navigator.vibrate && navigator.vibrate(200); } catch (e) {}
     const marca = restFim; setTimeout(() => { if (restId === null && restFim === marca) esconderDescanso(); }, 6000);
@@ -753,6 +804,10 @@ function aplicarMeta(inp) {
   S.plan.meta = Math.max(1, Math.round(num(inp.value))); tocarPlano(); salvar();
   const sec = $('.monthly-goal'); if (sec) sec.outerHTML = metaCard();
 }
+function marcarChips() {
+  const i = $('#x-passo'); if (!i) return;
+  $$('#chips-passo button').forEach(c => c.classList.toggle('selected', num(c.dataset.v) === num(i.value)));
+}
 function aoMudarCampo(inp) {
   const c = inp.dataset.campo;
   if (c === 'carga') aplicarCarga(inp);
@@ -781,7 +836,9 @@ const acoes = {
     if (pInp) $$('.set-card:not(.set-done) [data-campo=peso]').forEach(i => { if (num(i.value) === 0) { i.value = pInp.value; ajustarLargura(i); } });
     const sec = row.closest('.sets-section');
     if ($$('.set-card.set-done', sec).length >= f.e.series) {
-      esconderDescanso(); toast('Exercício concluído!');
+      esconderDescanso();
+      const pesoSalvo = pInp ? f.e.carga : 0;
+      toast(pesoSalvo > 0 ? `Exercício concluído · carga de ${fmt(pesoSalvo)} kg salva` : 'Exercício concluído!');
       const eid = f.e.id;
       setTimeout(() => { const r = rota(); if (r.nome === 'exercicio' && r.a === eid) location.replace('#/treino/' + f.t.id); }, 700);
       return;
@@ -827,6 +884,7 @@ const acoes = {
     if (novo) { t.exercicios.push(e); rascunho = null; }
     tocarPlano(); salvar(); toast(novo ? 'Exercício adicionado' : 'Exercício salvo'); voltar();
   },
+  'chip-passo'(b) { const i = $('#x-passo'); i.value = fmt(num(b.dataset.v)); marcarChips(); },
   tema(b) { temaPref = b.dataset.v; lsSet(TEMA_KEY, temaPref); aplicarTema(); const c = $('.theme-card'); if (c) c.outerHTML = temaCard(); },
   async 'copiar-url'(b) {
     const url = urlApp(); let ok = false;
@@ -841,7 +899,7 @@ const acoes = {
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `treino-backup-${hoje()}.json`; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
   },
   async entrar() {
-    const url = $('#s-url').value.trim().replace(/\/+$/, ''), key = $('#s-key').value.trim(), email = $('#s-email').value.trim(), pass = $('#s-pass').value;
+    const url = $('#s-url').value.trim().replace(/\/+$/, ''), key = $('#s-key').value.trim(), email = $('#s-email').value.trim().toLowerCase(), pass = $('#s-pass').value;
     if (!url || !key || !email || !pass) return setSync('Preencha URL, chave, e-mail e senha.', true);
     setSync('Entrando…');
     try {
@@ -852,6 +910,38 @@ const acoes = {
     } catch (e) { setSync(e.message === 'Failed to fetch' ? 'Sem conexão. Confira a URL do projeto e a internet.' : (e.message || 'Falha ao entrar.'), true); }
   },
   sair() { sync = { url: sync.url, key: sync.key, email: sync.email }; lsSet(SYNC_KEY, JSON.stringify(sync)); syncMsg = 'Você saiu. Os dados continuam neste aparelho.'; syncErro = false; render(true); },
+  'concluir-treino'(b) {
+    const t = treinoPorId(b.dataset.tid); if (!t) return;
+    const c = S.conclusoes.find(x => x.tid === t.id && x.data === hoje());
+    if (c) { c.del = false; c.t = Date.now(); } else S.conclusoes.push({ id: uid(), tid: t.id, data: hoje(), t: Date.now() });
+    salvar(); esconderDescanso(); toast('Treino concluído!'); location.replace('#/hoje');
+  },
+  'desfazer-conclusao'(b) {
+    const c = S.conclusoes.find(x => !x.del && x.tid === b.dataset.tid && x.data === hoje());
+    if (c) { c.del = true; c.t = Date.now(); salvar(); }
+    renderManter();
+  },
+  async 'trocar-senha'() {
+    const n1 = $('#n-pass').value, n2 = $('#n-pass2').value;
+    const st = (msg, tipo) => { const el = $('#senha-status'); el.hidden = false; el.className = 'connection-status ' + (tipo || ''); $('.txt', el).textContent = msg; };
+    if (n1.length < 6) return st('A senha precisa ter pelo menos 6 caracteres.', 'erro');
+    if (n1 !== n2) return st('As duas senhas não são iguais.', 'erro');
+    st('Trocando…');
+    try {
+      await garantirSessao();
+      const r = await fetch(`${sync.url}/auth/v1/user`, { method: 'PUT', headers: cab(), body: JSON.stringify({ password: n1 }) });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok) {
+        const cod = j.error_code || j.code || '';
+        if (cod === 'same_password') throw new Error('A nova senha precisa ser diferente da atual.');
+        if (cod === 'weak_password') throw new Error('Senha fraca demais. Use mais caracteres, misturando letras e números.');
+        if (cod === 'reauthentication_needed') throw new Error('Por segurança, toque em Entrar de novo (com a senha atual) e tente outra vez.');
+        throw new Error(j.msg || j.message || j.error_description || 'Não foi possível trocar a senha.');
+      }
+      $('#n-pass').value = ''; $('#n-pass2').value = '';
+      st('Senha trocada. Use a nova senha ao entrar nos outros aparelhos.', 'connected');
+    } catch (e) { st(e.message === 'Failed to fetch' ? 'Sem conexão. Tente de novo.' : e.message, 'erro'); }
+  },
   'sync-agora'() { sincronizar(); }
 };
 document.addEventListener('click', e => { const b = e.target.closest('[data-act]'); if (b && acoes[b.dataset.act]) acoes[b.dataset.act](b, e); });
@@ -867,6 +957,7 @@ document.addEventListener('input', e => {
   const el = e.target;
   if (el.classList.contains('cnt-input')) ajustarLargura(el);
   if (el.dataset && el.dataset.bind === 'regulagem') { const f = acharEx(el.dataset.eid); if (f) { f.e.regulagem = el.value; tocarPlano(); salvar(); } el.style.height = 'auto'; el.style.height = el.scrollHeight + 'px'; }
+  if (el.id === 'x-passo') marcarChips();
   if (el.id === 'x-nome') { const b = $('#btn-salvar-ex'); if (b) b.disabled = !el.value.trim(); }
 });
 document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.classList && e.target.classList.contains('cnt-input')) e.target.blur(); });
@@ -878,7 +969,7 @@ function importar(file) {
       const d = JSON.parse(rd.result);
       if (!d.plan || !Array.isArray(d.plan.treinos)) throw 0;
       if (!confirm('Substituir os dados deste aparelho pelo backup?')) return;
-      d.logs = d.logs || []; d.aulas = d.aulas || []; d.plan.meta = d.plan.meta > 0 ? d.plan.meta : 12;
+      d.logs = d.logs || []; d.aulas = d.aulas || []; d.conclusoes = d.conclusoes || []; d.plan.meta = d.plan.meta > 0 ? d.plan.meta : 12;
       S = d; salvar(); location.hash = '#/hoje'; render();
     } catch (e) { alert('Arquivo de backup inválido.'); }
   };
@@ -907,7 +998,7 @@ const cab = () => ({ apikey: sync.key, Authorization: 'Bearer ' + sync.access, '
 function mesclar(remoto) {
   if (!remoto || !remoto.plan) return;
   if ((remoto.plan.updatedAt || 0) > (S.plan.updatedAt || 0)) S.plan = { ...remoto.plan, meta: remoto.plan.meta > 0 ? remoto.plan.meta : 12 };
-  for (const campo of ['logs', 'aulas']) {
+  for (const campo of ['logs', 'aulas', 'conclusoes']) {
     const mapa = new Map((S[campo] || []).map(x => [x.id, x]));
     for (const x of remoto[campo] || []) { const l = mapa.get(x.id); if (!l || (x.t || 0) > (l.t || 0)) mapa.set(x.id, x); }
     S[campo] = [...mapa.values()];
