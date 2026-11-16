@@ -30,18 +30,19 @@
   --accent:rgb(175,120,249); --accent-2:#c9ff3d; --accent-soft:#f0e7ff;
   --ballet:#cf326e; --ballet-card:rgb(207,50,165); --ballet-soft:#fbe1ec;
   --success:#168f68; --danger:#d84747; --shadow:0 14px 40px rgba(26,35,67,.1);
+  --c-peso:#af78f9;--c-gordura:#f0675b;--c-musculo:#12a594;--c-magra:#3b82f6;--c-agua:#2f9e44;--c-imc:#e8a317;--c-visceral:#d946a8;--c-ossea:#8b7355;--c-proteina:#6366f1;--c-bmr:#64748b;
   color-scheme:light;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
     --bg:#090e1e; --surface:#141b31; --surface-2:#202942; --text:#f7f8ff; --muted:#9da6c0; --border:#2a334d;
-    --accent-soft:#3a2854; --ballet-soft:#4a1b33; --success:#39ce99; --danger:#ff7777; --shadow:0 18px 46px rgba(0,0,0,.28);
+    --accent-soft:#3a2854; --ballet-soft:#4a1b33; --c-peso:#b98cff;--c-gordura:#ff8579;--c-musculo:#2dd4bf;--c-magra:#6aa5ff;--c-agua:#4ade80;--c-imc:#fbbf24;--c-visceral:#f472b6;--c-ossea:#c4a77d;--c-proteina:#818cf8;--c-bmr:#94a3b8; --success:#39ce99; --danger:#ff7777; --shadow:0 18px 46px rgba(0,0,0,.28);
     color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
   --bg:#090e1e; --surface:#141b31; --surface-2:#202942; --text:#f7f8ff; --muted:#9da6c0; --border:#2a334d;
-  --accent-soft:#3a2854; --ballet-soft:#4a1b33; --success:#39ce99; --danger:#ff7777; --shadow:0 18px 46px rgba(0,0,0,.28);
+  --accent-soft:#3a2854; --ballet-soft:#4a1b33; --c-peso:#b98cff;--c-gordura:#ff8579;--c-musculo:#2dd4bf;--c-magra:#6aa5ff;--c-agua:#4ade80;--c-imc:#fbbf24;--c-visceral:#f472b6;--c-ossea:#c4a77d;--c-proteina:#818cf8;--c-bmr:#94a3b8; --success:#39ce99; --danger:#ff7777; --shadow:0 18px 46px rgba(0,0,0,.28);
   color-scheme:dark;
 }
 .is-ballet{--accent:var(--ballet);--accent-soft:var(--ballet-soft)}
@@ -227,6 +228,17 @@ h1{margin-top:8px;font-size:clamp(35px,10vw,46px);line-height:1.02;letter-spacin
 .history-list article>div strong{font-size:18px}
 .history-list article p{display:flex;align-items:flex-end;gap:5px;color:var(--muted);font-size:14px}
 .history-list article p small{font-size:10px;font-weight:800;letter-spacing:.08em}
+.text-link{display:block;margin-top:14px;color:var(--ballet);font-size:14px;font-weight:700;text-align:center}
+.class-list{display:grid;gap:10px}
+.class-item{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;padding:16px 18px;border:1px solid var(--border);border-radius:20px;background:var(--surface);color:var(--text)}
+.class-item div{display:grid;gap:3px;min-width:0}
+.class-item small{color:var(--muted);font-size:12px}
+.class-item small::first-letter{text-transform:uppercase}
+.class-item strong{font-family:var(--f-head);font-size:16px}
+.class-item p{color:var(--muted);font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.class-item svg{color:var(--muted)}
+.safari-note{display:grid;gap:3px;margin:0 0 16px;padding:14px 16px;border-radius:18px;background:var(--accent-soft);color:var(--text);font-size:14px;line-height:1.4}
+.safari-note span{color:var(--muted)}
 .ballet-summary{margin-top:28px}
 .ballet-summary>p{padding:20px;border-radius:20px;background:var(--surface);color:var(--muted);line-height:1.5}
 .ballet-summary>p strong{color:var(--text)}
@@ -260,7 +272,7 @@ h1{margin-top:8px;font-size:clamp(35px,10vw,46px);line-height:1.02;letter-spacin
 .exercise-form-section{margin-top:28px}
 .exercise-form-section>h2{margin-bottom:13px;font-size:23px;letter-spacing:-.035em}
 .form-grid-three{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-.form-grid-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.form-grid-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:end}
 .form-grid-three>div,.form-grid-two>div{min-width:0}
 .form-grid-three label,.form-grid-two label{display:block;min-height:32px}
 .load-form{gap:14px}
@@ -312,8 +324,75 @@ h1{margin-top:8px;font-size:clamp(35px,10vw,46px);line-height:1.02;letter-spacin
 .reminder-url>span:first-child{overflow:hidden;color:var(--muted);font-size:12px;text-overflow:ellipsis;white-space:nowrap}
 .reminder-url>span:last-child{display:flex;align-items:center;gap:6px;color:var(--accent);font-size:13px;font-weight:800}
 
+/* ---------- Corpo ---------- */
+.body-hero{padding:20px;border-radius:26px;background:var(--accent);color:#fff}
+.body-hero .k{font-size:11px;font-weight:800;letter-spacing:.12em;color:rgba(255,255,255,.9)}
+.body-hero .v{margin-top:6px;font-family:var(--f-head);font-size:54px;font-weight:800;letter-spacing:-.05em;line-height:1}
+.body-hero .v small{margin-left:4px;font-size:20px}
+.body-hero .d{margin-top:12px;font-size:13px;color:rgba(255,255,255,.92)}
+.body-hero .d b{display:inline-block;margin-right:8px;padding:3px 10px;border-radius:99px;background:var(--accent-2);color:#14200a;font-size:12px}
+.metric-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}
+.metric-grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.metric.wide{grid-column:1/-1}
+.metric .pair{display:flex;gap:16px;margin-top:2px}
+.metric-grid.two .metric:only-child{grid-column:1/-1}
+.body-hero .top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.hero-imc{display:grid;justify-items:center;min-width:76px;padding:8px 12px;border-radius:16px;background:rgba(255,255,255,.18);color:#fff}
+.hero-imc.on{background:rgba(255,255,255,.34);box-shadow:0 0 0 2px rgba(255,255,255,.7)}
+.hero-imc span{font-size:10px;font-weight:800;letter-spacing:.12em;color:rgba(255,255,255,.9)}
+.hero-imc b{font-family:var(--f-head);font-size:24px;font-weight:800;letter-spacing:-.03em;line-height:1.15}
+.hero-imc small{font-size:11px;font-weight:700;color:rgba(255,255,255,.9)}
+.metric .pair>span{display:block}
+.metric{min-width:0;padding:12px;border:1px solid var(--border);border-radius:16px;background:var(--surface);text-align:left}
+.metric{--mc:var(--accent)}
+.metric.on{border-color:var(--mc);box-shadow:0 0 0 2px color-mix(in srgb,var(--mc) 22%,transparent)}
+.metric{position:relative}
+.metric .dot{display:none;position:absolute;top:12px;right:12px;width:9px;height:9px;border-radius:50%;background:var(--mc)}
+.metric.on .dot{display:inline-block}
+.metric .k{display:flex;align-items:center}
+.hero-peso{display:grid;justify-items:start;padding:0;text-align:left;color:#fff;background:none}
+.hero-peso .k{font-size:11px;font-weight:800;letter-spacing:.12em;color:rgba(255,255,255,.9)}
+.hero-peso .v{margin-top:6px;font-family:var(--f-head);font-size:54px;font-weight:800;letter-spacing:-.05em;line-height:1}
+.hero-peso .v small{margin-left:4px;font-size:20px}
+.body-hero:not(.on) .hero-peso{opacity:.78}
+.cmp-card{padding:16px 14px 8px}
+.cmp-selects{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cmp-selects label{display:block;margin:0 0 5px 3px;color:var(--muted);font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.cmp-selects select{width:100%;min-height:48px;padding:0 10px;border:1px solid var(--border);border-radius:14px;background:var(--bg);color:var(--text);font-size:16px}
+.cmp-rows{margin-top:6px}
+.cmp-row{display:grid;grid-template-columns:1fr auto;gap:1px 12px;padding:12px 4px;border-bottom:1px solid var(--border)}
+.cmp-row:last-child{border-bottom:0}
+.cmp-row b{font-family:var(--f-head);font-size:14px}
+.cmp-row strong{font-size:15px;text-align:right}
+.cmp-row span{color:var(--muted);font-size:12px}
+.cmp-row .pct{text-align:right;font-weight:700}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin:6px 4px 4px;font-size:12px;color:var(--muted)}
+.legend span{display:flex;align-items:center;gap:6px;min-width:0}
+.legend i{flex:none;width:10px;height:10px;border-radius:50%}
+.legend b{color:var(--text);font-family:var(--f-body);font-weight:700}
+.legend .sem{opacity:.6}
+.line-chart .zero{stroke:var(--muted);stroke-width:1;opacity:.55}
+.line-chart .mline{fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.line-chart .mdot{fill:var(--surface);stroke-width:3}
+.metric .k{display:block;color:var(--muted);font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.metric .v{display:block;margin-top:3px;font-family:var(--f-head);font-size:20px;font-weight:800;letter-spacing:-.03em;white-space:nowrap}
+.metric .v small{margin-left:2px;color:var(--muted);font-family:var(--f-body);font-size:11px;font-weight:700}
+.metric .d{display:block;margin-top:1px;color:var(--muted);font-size:11px;font-weight:700}
+.body-sec{margin-top:26px}
+.period{display:flex;flex-wrap:wrap;gap:6px;margin:8px 4px 6px}
+.period button{min-height:36px;padding:0 13px;border-radius:99px;background:var(--surface-2);color:var(--muted);font-size:12px;font-weight:800}
+.period button.on{background:var(--accent);color:#fff}
+.hist-rows{padding:2px 17px;border-radius:24px;background:var(--surface)}
+.hist-row{display:grid;grid-template-columns:1fr auto auto;gap:14px;align-items:center;min-height:58px;border-bottom:1px solid var(--border);font-size:14px}
+.hist-row:last-child{border-bottom:0}
+.hist-row b{font-family:var(--f-head)}.hist-row span{color:var(--muted)}
+.zepp-text{width:100%;min-height:96px;margin-top:2px;padding:14px;resize:vertical;border:1px solid var(--border);border-radius:15px;outline:none;background:var(--bg);color:var(--text);font-size:16px;line-height:1.4}
+.zepp-text:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 14%,transparent)}
+.hint{margin-top:8px;color:var(--muted);font-size:13px;line-height:1.45}
+.exercise-form-card input[type=date]{min-width:0;-webkit-appearance:none;appearance:none}
+
 /* ---------- menu e aviso ---------- */
-.bottom-nav{position:fixed;z-index:10;bottom:0;left:50%;transform:translateX(-50%);display:grid;grid-template-columns:repeat(4,1fr);width:min(100%,var(--shell));height:calc(80px + env(safe-area-inset-bottom,0px));
+.bottom-nav{position:fixed;z-index:10;bottom:0;left:50%;transform:translateX(-50%);display:grid;grid-template-columns:repeat(5,1fr);width:min(100%,var(--shell));height:calc(80px + env(safe-area-inset-bottom,0px));
   padding:6px max(18px,env(safe-area-inset-right,0px)) max(6px,env(safe-area-inset-bottom,0px)) max(18px,env(safe-area-inset-left,0px));
   border-top:1px solid var(--border);background:color-mix(in srgb,var(--bg) 90%,transparent);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
 .bottom-nav a{position:relative;display:grid;place-items:center;align-content:center;gap:4px;color:var(--muted)}
@@ -336,6 +415,7 @@ h1{margin-top:8px;font-size:clamp(35px,10vw,46px);line-height:1.02;letter-spacin
   <a href="#/hoje" data-tab="hoje"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10M9 20v-6h6v6"/></svg><span>Hoje</span></a>
   <a href="#/treinos" data-tab="treinos"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7v10M3.5 9v6M18 7v10M20.5 9v6M6 12h12"/></svg><span>Treinos</span></a>
   <a href="#/evolucao" data-tab="evolucao"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19V5M4 19h17"/><path d="m7 15 4-4 3 2 5-7"/></svg><span>Evolução</span></a>
+  <a href="#/corpo" data-tab="corpo"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="7.5" r="3.5"/><path d="M5 21c0-4.2 3-6.5 7-6.5s7 2.3 7 6.5"/></svg><span>Corpo</span></a>
   <a href="#/ajustes" data-tab="ajustes"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.83 2.83-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6 1.7 1.7 0 0 0-.4 1.1V21h-4v-.1A1.7 1.7 0 0 0 8.6 19.4a1.7 1.7 0 0 0-1.88.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.6-1H3v-4h.1A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.34-1.88l-.06-.06 2.83-2.83.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.6V3h4v.1A1.7 1.7 0 0 0 15 4.6a1.7 1.7 0 0 0 1.88-.34l.06-.06 2.83 2.83-.06.06A1.7 1.7 0 0 0 19.4 9a1.7 1.7 0 0 0 1.6 1h.1v4H21a1.7 1.7 0 0 0-1.6 1Z"/></svg><span>Ajustes</span></a>
 </nav>
 <noscript>Este app precisa de JavaScript.</noscript>
@@ -386,11 +466,13 @@ const ICONS = {
   download: '<path d="M12 3v12M7 10l5 5 5-5"/><path d="M5 21h14"/>',
   upload: '<path d="M12 21V9M7 14l5-5 5 5"/><path d="M5 3h14"/>',
   copy: '<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>',
+  body: '<circle cx="12" cy="7.5" r="3.5"/><path d="M5 21c0-4.2 3-6.5 7-6.5s7 2.3 7 6.5"/>',
   lock: '<rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>'
 };
 const ic = (n, s = 24) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[n]}</svg>`;
 
 /* ---------- dados ---------- */
+let corpoSel = ['peso'], corpoGordUn = 'gordura', corpoPeriodo = 90, cmpA = null, cmpB = null;
 const KEY = 'treino-app-v1', SYNC_KEY = 'treino-app-sync-v1', TEMA_KEY = 'treino-app-tema';
 let S = carregar();
 let sync = (() => { try { return JSON.parse(lsGet(SYNC_KEY)) || {}; } catch (e) { return {}; } })();
@@ -401,19 +483,25 @@ let editandoMeta = false;
 function semente() {
   const ex = (nome, series, reps, descanso, passo) => ({ id: uid(), nome, video: '', series, reps, descanso, regulagem: '', passo, carga: 0 });
   return { v: 1,
-    plan: { updatedAt: Date.now(), meta: 12, treinos: [
+    plan: { updatedAt: 0, meta: 12, treinos: [
       { id: uid(), nome: 'Inferiores', frente: 'Musculação', dias: [1, 4], exercicios: [ex('Leg press', 3, 12, 90, 5), ex('Cadeira extensora', 3, 12, 60, 2.5), ex('Mesa flexora', 3, 12, 60, 2.5)] },
       { id: uid(), nome: 'Superiores', frente: 'Musculação', dias: [2, 5], exercicios: [ex('Puxada frontal', 3, 10, 90, 2.5), ex('Remada baixa', 3, 10, 90, 2.5), ex('Supino na máquina', 3, 10, 90, 2.5)] },
       { id: uid(), nome: 'Ballet', frente: 'Ballet', dias: [1, 2, 3, 4, 5], exercicios: [ex('Aquecimento dos pés', 2, 15, 30, 0), ex('Alongamento de posterior', 2, 30, 20, 0)] }
     ] },
-    logs: [], aulas: [], conclusoes: [] };
+    logs: [], aulas: [], conclusoes: [], corpo: [] };
+}
+function planoDeExemplo(r) {
+  const n = r.plan.treinos.map(t => t.nome).join('|');
+  return n === 'Inferiores|Superiores|Ballet' && !r.logs.length && !r.aulas.length && !r.conclusoes.length && !r.corpo.length
+    && r.plan.treinos.every(t => t.exercicios.every(e => !(e.carga > 0)));
 }
 function carregar() {
   try {
     const r = JSON.parse(lsGet(KEY));
     if (r && r.plan && Array.isArray(r.plan.treinos)) {
-      r.logs = r.logs || []; r.aulas = r.aulas || []; r.conclusoes = r.conclusoes || [];
+      r.logs = r.logs || []; r.aulas = r.aulas || []; r.conclusoes = r.conclusoes || []; r.corpo = r.corpo || [];
       r.plan.meta = r.plan.meta > 0 ? r.plan.meta : 12;
+      if (planoDeExemplo(r)) r.plan.updatedAt = 0;
       return r;
     }
   } catch (e) {}
@@ -448,7 +536,7 @@ function sugestao(e) {
 function treinosDoMes() {
   const d = new Date(), pre = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-`, dias = new Set();
   for (const l of S.logs) if (!l.del && l.data.startsWith(pre)) dias.add(l.data);
-  for (const a of S.aulas) if (a.data.startsWith(pre)) dias.add(a.data);
+  for (const a of S.aulas) if (!a.del && a.data.startsWith(pre)) dias.add(a.data);
   for (const c of S.conclusoes) if (!c.del && c.data.startsWith(pre)) dias.add(c.data);
   return dias.size;
 }
@@ -467,11 +555,11 @@ try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', apli
 
 /* ---------- roteamento ---------- */
 const rota = () => { const p = location.hash.split('/'); return { nome: p[1] || 'hoje', a: p[2], b: p[3] }; };
-const ABA = { hoje: 'hoje', treino: 'treinos', exercicio: 'treinos', treinos: 'treinos', editar: 'treinos', 'ex-editar': 'treinos', evolucao: 'evolucao', ajustes: 'ajustes' };
+const ABA = { hoje: 'hoje', treino: 'treinos', exercicio: 'treinos', treinos: 'treinos', editar: 'treinos', 'ex-editar': 'treinos', evolucao: 'evolucao', aulas: 'hoje', aula: 'hoje', ajustes: 'ajustes', corpo: 'corpo', 'corpo-medida': 'corpo', importar: 'corpo' };
 let navCount = 0;
 function render(manter) {
   const r = rota();
-  const views = { hoje: vHoje, treino: vTreino, exercicio: vExercicio, treinos: vTreinos, editar: vEditar, 'ex-editar': vExEditar, evolucao: vEvolucao, ajustes: vAjustes };
+  const views = { hoje: vHoje, treino: vTreino, exercicio: vExercicio, treinos: vTreinos, editar: vEditar, 'ex-editar': vExEditar, evolucao: vEvolucao, ajustes: vAjustes, aulas: vAulas, aula: vAula, corpo: vCorpo, 'corpo-medida': vCorpoMedida, importar: vImportar };
   const aba = ABA[r.nome] || 'hoje';
   $$('.bottom-nav a').forEach(a => a.dataset.tab === aba ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current'));
   $('#app').innerHTML = (views[r.nome] || vHoje)(r);
@@ -483,6 +571,7 @@ window.addEventListener('hashchange', () => { navCount++; if (rota().nome !== 'e
 function paiDe(r) {
   if (r.nome === 'exercicio') { const f = acharEx(r.a); return f ? 'treino/' + f.t.id : 'treinos'; }
   if (r.nome === 'ex-editar') return 'editar/' + r.a;
+  if (r.nome === 'corpo-medida') return 'corpo';
   if (r.nome === 'treino' || r.nome === 'editar') return 'treinos';
   return 'hoje';
 }
@@ -521,22 +610,51 @@ function cartaoPlano(t) {
   return `<a class="plan-card ${ball ? 'ballet' : 'strength'}" href="#/treino/${t.id}"><span class="plan-type">${esc(t.frente.toUpperCase())}</span><strong>${esc(tituloTreino(t))}</strong><p>${plural(t.exercicios.length, 'exercício', 'exercícios')} · ${feitas} de ${plural(total, 'série', 'séries')}</p><div class="hero-progress"><span style="width:${pct}%"></span></div><div class="hero-footer"><b>${estado}</b>${ic('chevron')}</div></a>`;
 }
 function aulaCard() {
-  const a = S.aulas.find(x => x.data === hoje());
+  const a = S.aulas.find(x => !x.del && x.data === hoje());
   return `<section class="class-log"><div class="section-heading compact"><div><span class="kicker" style="color:var(--ballet)">BALLET</span><h2>${a ? 'Aula de hoje registrada' : 'Registrar aula de hoje'}</h2></div></div>
     <label>Duração (minutos)</label>${contador({ valor: a ? a.duracao : 60, campo: 'duracao', step: 5, rot: 'Duração da aula em minutos' })}
     <label>Como foi</label>
     <div class="feeling-picker" id="sentir">${SENTIR.map((s, i) => `<button type="button" data-act="sentir" data-v="${i + 1}" class="${a && a.sentir === i + 1 ? 'selected' : ''}" aria-pressed="${!!(a && a.sentir === i + 1)}">${s}</button>`).join('')}</div>
     <textarea id="aula-nota" aria-label="Observações da aula" placeholder="Anotações da aula (opcional)">${esc(a ? a.nota : '')}</textarea>
-    <button type="button" class="primary-button ballet-button" data-act="salvar-aula">${a ? 'Atualizar aula' : 'Registrar aula'}</button></section>`;
+    <button type="button" class="primary-button ballet-button" data-act="salvar-aula">${a ? 'Atualizar aula' : 'Registrar aula'}</button>
+    <a class="text-link" href="#/aulas">Ver todas as aulas ou registrar em outra data</a></section>`;
+}
+const noSafari = () => /iPhone|iPad|iPod/.test(navigator.userAgent) && !(navigator.standalone || (window.matchMedia && matchMedia('(display-mode: standalone)').matches));
+function avisoSafari() {
+  if (!noSafari() || sync.access) return '';
+  return `<a class="safari-note" href="#/ajustes"><strong>Você está no Safari.</strong><span>Aqui os dados ficam separados do app da tela de início. Toque para entrar com a sua conta e ver seus treinos.</span></a>`;
 }
 function vHoje() {
   const d = new Date(), lista = S.plan.treinos.filter(t => t.dias.includes(d.getDay()));
   const data = d.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' }).toUpperCase();
-  let h = cabecalho({ eyebrow: data, titulo: 'Hoje' }) + metaCard();
+  let h = cabecalho({ eyebrow: data, titulo: 'Hoje' }) + avisoSafari() + metaCard();
   if (!lista.length) h += `<div class="vazio"><strong>Nenhum treino marcado para hoje.</strong><p>Marque os dias de cada treino ao editá-lo, ou abra um treino na aba Treinos.</p><a class="primary-button" href="#/treinos">${ic('dumbbell')} Ver treinos</a></div>`;
   else h += `<section class="today-plans">${lista.map(cartaoPlano).join('')}</section>`;
   if (lista.some(t => t.frente === 'Ballet')) h += aulaCard();
   return h;
+}
+
+/* ---------- Aulas de ballet: histórico, edição e registro atrasado ---------- */
+const aulasAtivas = () => S.aulas.filter(a => !a.del).sort((x, y) => y.data.localeCompare(x.data));
+const dataExtensa = iso => new Date(iso + 'T00:00:00').toLocaleDateString('pt-BR', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+function vAulas() {
+  const L = aulasAtivas();
+  let h = cabecalho({ eyebrow: 'BALLET', titulo: 'Aulas', voltarBtn: true });
+  h += `<a class="primary-button ballet-button" href="#/aula/novo" style="margin-bottom:18px">${ic('plus')} Registrar aula em outra data</a>`;
+  if (!L.length) return h + '<div class="vazio"><strong>Nenhuma aula registrada.</strong><p>Registre a aula de hoje na aba Hoje ou use o botão acima para uma data passada.</p></div>';
+  return h + `<div class="section-heading compact"><h2>Todas as aulas</h2><span>${plural(L.length, 'aula', 'aulas')}</span></div><div class="class-list">${L.map(a => `<a class="class-item" href="#/aula/${a.id}"><div><small>${esc(dataExtensa(a.data))}</small><strong>${a.duracao || 0} min${a.sentir ? ' · ' + SENTIR[a.sentir - 1] : ''}</strong>${a.nota ? `<p>${esc(a.nota)}</p>` : ''}</div>${ic('chevron', 18)}</a>`).join('')}</div>`;
+}
+function vAula(r) {
+  const novo = r.a === 'novo', a = novo ? { data: hoje(), duracao: 60, sentir: 0, nota: '' } : S.aulas.find(x => x.id === r.a && !x.del);
+  if (!a) return naoEncontrado('Aula');
+  return `${cabecalho({ eyebrow: 'BALLET', titulo: novo ? 'Nova aula' : 'Editar aula', voltarBtn: true })}<section class="class-log" style="margin-top:0">
+    <label for="a-data">Data da aula</label><input id="a-data" type="date" max="${hoje()}" value="${esc(a.data)}">
+    <label style="margin-top:18px">Duração (minutos)</label>${contador({ valor: a.duracao || 60, campo: 'duracao', step: 5, rot: 'Duração da aula em minutos' })}
+    <label>Como foi</label>
+    <div class="feeling-picker" id="sentir">${SENTIR.map((s, i) => `<button type="button" data-act="sentir" data-v="${i + 1}" class="${a.sentir === i + 1 ? 'selected' : ''}" aria-pressed="${a.sentir === i + 1}">${s}</button>`).join('')}</div>
+    <textarea id="aula-nota" aria-label="Observações da aula" placeholder="Anotações da aula (opcional)">${esc(a.nota || '')}</textarea></section>
+  ${novo ? '' : `<div class="danger-zone"><button type="button" data-act="pedir-excluir" data-alvo="aula" data-eid="${a.id}">${ic('trash', 20)} Excluir aula</button></div>`}
+  <button type="button" class="primary-button ballet-button bottom-action" data-act="salvar-aula-ed" data-id="${novo ? 'novo' : a.id}">${ic('check')} Salvar aula</button>`;
 }
 
 /* ---------- Treinos ---------- */
@@ -600,7 +718,7 @@ function vExercicio(r) {
 }
 
 /* ---------- Evolução ---------- */
-function graficoLinha(pts) {
+function graficoLinha(pts, unid = 'kg', rotulo = 'Carga máxima por dia') {
   const X0 = 46, X1 = 326, Y0 = 30, Y1 = 148, YB = 165;
   const ts = pts.map(p => new Date(p.d + 'T00:00:00').getTime()), t0 = Math.min(...ts), t1 = Math.max(...ts);
   let lo = Math.min(...pts.map(p => p.v)), hi = Math.max(...pts.map(p => p.v));
@@ -616,17 +734,17 @@ function graficoLinha(pts) {
   const datas = pts.length > 1
     ? `<text x="${X0}" y="184">${fmtEixo(pts[0].d)}</text><text x="${X1}" y="184" text-anchor="end">${fmtEixo(pts[pts.length - 1].d)}</text>`
     : `<text x="${(X0 + X1) / 2}" y="184" text-anchor="middle">${fmtEixo(pts[0].d)}</text>`;
-  return `<svg class="line-chart" viewBox="0 0 340 190" role="img" aria-label="Carga máxima por dia: de ${fmt(pts[0].v)} para ${fmt(pts[pts.length - 1].v)} quilos">
+  return `<svg class="line-chart" viewBox="0 0 340 190" role="img" aria-label="${rotulo}: de ${fmt(pts[0].v)} para ${fmt(pts[pts.length - 1].v)} ${unid}">
     <defs><linearGradient id="area" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--accent);stop-opacity:.3"/><stop offset="1" style="stop-color:var(--accent);stop-opacity:0"/></linearGradient></defs>
     <g class="grid">${grade}</g>
     ${pts.length > 1 ? `<path class="area" d="${linha} L${P[P.length - 1][0].toFixed(1)} ${YB} L${P[0][0].toFixed(1)} ${YB}Z"/><path class="chart-line" d="${linha}"/>` : ''}
-    ${P.map(([a, b], i) => `<circle cx="${a.toFixed(1)}" cy="${b.toFixed(1)}" r="5"><title>${fmtBarra(pts[i].d)}: ${fmt(pts[i].v)} kg</title></circle>`).join('')}
+    ${P.map(([a, b], i) => `<circle cx="${a.toFixed(1)}" cy="${b.toFixed(1)}" r="5"><title>${fmtBarra(pts[i].d)}: ${fmt(pts[i].v)} ${unid}</title></circle>`).join('')}
     <g class="axis-label">${rotulos}${datas}</g></svg>`;
 }
 function vEvolucao(r) {
   const todos = [];
   for (const t of S.plan.treinos) if (t.frente !== 'Ballet') for (const e of t.exercicios) if (logsDe(e.id).length) todos.push({ t, e });
-  const aulas = S.aulas.filter(a => (Date.now() - new Date(a.data + 'T00:00:00')) / 864e5 <= 30);
+  const aulas = S.aulas.filter(a => !a.del && (Date.now() - new Date(a.data + 'T00:00:00')) / 864e5 <= 30);
   let h = cabecalho({ eyebrow: 'SEU DESEMPENHO', titulo: 'Evolução' }) + '<p class="page-intro">Carga máxima por dia de treino</p>';
   if (!todos.length) h += '<div class="vazio"><strong>Ainda sem registros.</strong><p>Conclua séries na tela de um exercício e o gráfico aparece aqui.</p></div>';
   else {
@@ -641,7 +759,7 @@ function vEvolucao(r) {
     h += '</div></section>';
   }
   const media = aulas.length ? Math.round(aulas.reduce((s, a) => s + a.duracao, 0) / aulas.length) : 0;
-  h += `<section class="ballet-summary"><div class="section-heading compact"><h2>Ballet nos últimos 30 dias</h2></div><p>${aulas.length ? `<strong>${plural(aulas.length, 'aula', 'aulas')}</strong> ${aulas.length === 1 ? 'registrada' : 'registradas'}, duração média de <strong>${media} min.</strong>` : 'Nenhuma aula registrada nos últimos 30 dias.'}</p></section>`;
+  h += `<section class="ballet-summary"><div class="section-heading compact"><h2>Ballet nos últimos 30 dias</h2></div><p>${aulas.length ? `<strong>${plural(aulas.length, 'aula', 'aulas')}</strong> ${aulas.length === 1 ? 'registrada' : 'registradas'}, duração média de <strong>${media} min.</strong>` : 'Nenhuma aula registrada nos últimos 30 dias.'}</p><a class="text-link" href="#/aulas">Ver todas as aulas ou registrar em outra data</a></section>`;
   return h;
 }
 
@@ -677,6 +795,210 @@ function vExEditar(r) {
   return envolver(t, h);
 }
 
+/* ---------- Corpo ---------- */
+const METRICAS = [
+  { k: 'peso', nome: 'Peso', u: 'kg', dec: 1 }, { k: 'gordura', nome: 'Gordura %', u: '%', dec: 1, t: 'Gordura corporal (%)' }, { k: 'gkg', nome: 'Gordura kg', u: 'kg', dec: 1, t: 'Gordura corporal (kg)' }, { k: 'magra', nome: 'Massa magra', u: 'kg', dec: 1 },
+  { k: 'imc', nome: 'IMC', u: '', dec: 1 }, { k: 'musculo', nome: 'Músculo', u: 'kg', dec: 1 }, { k: 'agua', nome: 'Água', u: '%', dec: 1 },
+  { k: 'visceral', nome: 'Visceral', u: '', dec: 0, t: 'Gordura visceral' }, { k: 'ossea', nome: 'Massa óssea', u: 'kg', dec: 2 },
+  { k: 'proteina', nome: 'Proteína', u: '%', dec: 1 }, { k: 'bmr', nome: 'Metab. basal', u: 'kcal', dec: 0, t: 'Metabolismo basal (kcal)' }
+];
+const metr = k => METRICAS.find(m => m.k === k);
+const fmtC = (k, v) => v.toFixed(metr(k).dec).replace('.', ',');
+const corpoLista = () => S.corpo.filter(m => !m.del).sort((a, b) => a.data < b.data ? -1 : a.data > b.data ? 1 : 0);
+function corpoVal(m, k) {
+  if (k === 'gkg') return m.peso > 0 && m.gordura > 0 ? m.peso * m.gordura / 100 : 0;
+  if (k === 'magra') return m.peso > 0 && m.gordura > 0 ? m.peso * (1 - m.gordura / 100) : 0;
+  if (k === 'imc') { if (m.imc > 0) return m.imc; const h = (S.plan.altura || 0) / 100; return h > 0 && m.peso > 0 ? m.peso / (h * h) : 0; }
+  return m[k] > 0 ? m[k] : 0;
+}
+function deltaTxt(k, atual, ant) {
+  if (!(atual > 0) || !(ant > 0)) return '';
+  const d = atual - ant, z = Math.abs(d) < Math.pow(10, -metr(k).dec) / 2;
+  return z ? 'igual' : (d > 0 ? '+' : '−') + fmtC(k, Math.abs(d));
+}
+function upsertCorpo(campos, origem, idPref) {
+  let alvo = idPref && S.corpo.find(x => x.id === idPref && !x.del);
+  const mesmoDia = S.corpo.find(x => !x.del && x.data === campos.data && (!alvo || x.id !== alvo.id));
+  if (!alvo && mesmoDia) alvo = mesmoDia;
+  else if (alvo && mesmoDia) { mesmoDia.del = true; mesmoDia.t = Date.now(); }
+  const t = Date.now();
+  if (alvo) Object.assign(alvo, campos, { origem, t, del: false });
+  else S.corpo.push({ id: uid(), ...campos, origem, t });
+  salvar();
+}
+/* Lê o texto copiado da imagem do Zepp Life (Texto ao Vivo do iPhone). */
+function parseZepp(txt) {
+  const t = String(txt || '').replace(/ /g, ' ');
+  const N = '(\\d+(?:[.,]\\d+)?)', r = {};
+  const pega = re => { const m = t.match(re); return m ? num(m[1]) : 0; };
+  r.gordura = pega(new RegExp('gordura\\s+corporal[\\s:]{0,4}' + N + '\\s*%', 'i'));
+  r.proteina = pega(new RegExp('prote[ií]na[\\s:]{0,4}' + N + '\\s*%', 'i'));
+  r.bmr = pega(new RegExp('metabolismo\\s+basal[\\s:]{0,4}' + N + '\\s*kcal', 'i'));
+  r.ossea = pega(new RegExp('massa\\s+[oó]ssea[\\s:]{0,4}' + N + '\\s*kg', 'i'));
+  r.imc = pega(new RegExp('\\bimc[\\s:]{0,4}' + N, 'i'));
+  r.musculo = pega(new RegExp('m[uú]sculo[\\s:]{0,4}' + N + '\\s*kg', 'i'));
+  r.agua = pega(new RegExp('[aá]gua[\\s:]{0,4}' + N + '\\s*%', 'i'));
+  r.visceral = pega(new RegExp('gordura\\s+visceral[\\s:]{0,4}' + N, 'i'));
+  const re = new RegExp(N + '\\s*kg(?![a-z])', 'gi'); let m; r.peso = 0;
+  while ((m = re.exec(t))) { const antes = t.slice(Math.max(0, m.index - 20), m.index); if (!/m[uú]sculo|[oó]ssea/i.test(antes)) { r.peso = num(m[1]); break; } }
+  const meses = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+  const d = t.match(/(\d{1,2})\s+de\s+(janeiro|fevereiro|mar[çc]o|abril|maio|junho|julho|agosto|setembro|outubro|novembro|dezembro)(?:\s+de\s+(\d{4}))?/i);
+  if (d) {
+    const mes = meses.indexOf(d[2].toLowerCase().replace('marco', 'março')) + 1, hj = new Date();
+    let ano = d[3] ? +d[3] : hj.getFullYear();
+    if (!d[3] && new Date(ano, mes - 1, +d[1]) > hj) ano--;
+    r.data = `${ano}-${pad(mes)}-${pad(+d[1])}`;
+  }
+  return r;
+}
+const chaveSerie = k => k === 'gordura' ? corpoGordUn : k;
+const sinal = (v, casas) => (v > 0.0001 ? '+' : v < -0.0001 ? '−' : '') + Math.abs(v).toFixed(casas).replace('.', ',') + '%';
+function metricaCard(k, u, a) {
+  const v = corpoVal(u, k); if (!(v > 0)) return '';
+  const on = corpoSel.includes(k) ? 'on' : '', cor = `style="--mc:var(--c-${k})"`;
+  if (k === 'gordura') {
+    const kg = corpoVal(u, 'gkg'), dp = a ? deltaTxt('gordura', v, corpoVal(a, 'gordura')) : '', dk = a ? deltaTxt('gkg', kg, corpoVal(a, 'gkg')) : '';
+    return `<button type="button" class="metric ${on}" ${cor} data-act="corpo-metrica" data-k="gordura" aria-pressed="${!!on}"><span class="k"><i class="dot"></i>Gordura corporal</span><span class="pair"><span><span class="v">${fmtC('gkg', kg)}<small>kg</small></span><span class="d">${dk || '&nbsp;'}</span></span><span><span class="v">${fmtC('gordura', v)}<small>%</small></span><span class="d">${dp || '&nbsp;'}</span></span></span></button>`;
+  }
+  const m = metr(k), d = a ? deltaTxt(k, v, corpoVal(a, k)) : '';
+  return `<button type="button" class="metric ${on}" ${cor} data-act="corpo-metrica" data-k="${k}" aria-pressed="${!!on}"><span class="k"><i class="dot"></i>${esc(m.nome)}</span><span class="v">${fmtC(k, v)}${m.u ? `<small>${m.u}</small>` : ''}</span><span class="d">${d || '&nbsp;'}</span></button>`;
+}
+/* Várias medidas no mesmo gráfico: cada linha mostra a variação (%) desde o início do período. */
+function graficoMulti(series) {
+  const X0 = 46, X1 = 326, Y0 = 20, Y1 = 148, YB = 165, T = p => new Date(p.d + 'T00:00:00').getTime();
+  const todos = series.flatMap(s => s.pts), t0 = Math.min(...todos.map(T)), t1 = Math.max(...todos.map(T));
+  const norm = series.map(s => s.pts.map(p => ({ t: T(p), d: p.d, v: (p.v / s.pts[0].v - 1) * 100 })));
+  const vs = norm.flat().map(p => p.v);
+  let lo = Math.min(0, ...vs), hi = Math.max(0, ...vs);
+  if (hi - lo < 1) { hi += .5; lo -= .5; } else { const m = (hi - lo) * .12; hi += m; lo -= m; }
+  const x = t => t1 === t0 ? (X0 + X1) / 2 : X0 + (t - t0) / (t1 - t0) * (X1 - X0), y = v => Y0 + (1 - (v - lo) / (hi - lo)) * (Y1 - Y0);
+  const casas = Math.max(Math.abs(hi), Math.abs(lo)) < 10 ? 1 : 0, g = [hi, lo].map(v => y(v));
+  const linhas = norm.map((pts, i) => {
+    const cor = `var(--c-${series[i].k === 'gordura' ? 'gordura' : series[i].k})`, P = pts.map(p => [x(p.t), y(p.v)]);
+    const d = P.map(([a, b], n) => `${n ? 'L' : 'M'}${a.toFixed(1)} ${b.toFixed(1)}`).join(' '), ult = P[P.length - 1];
+    return `${P.length > 1 ? `<path class="mline" d="${d}" style="stroke:${cor}"/>` : ''}<circle class="mdot" cx="${ult[0].toFixed(1)}" cy="${ult[1].toFixed(1)}" r="4.5" style="stroke:${cor}"><title>${esc(series[i].titulo)}: ${sinal(pts[pts.length - 1].v, 1)}</title></circle>`;
+  }).join('');
+  return `<svg class="line-chart" viewBox="0 0 340 190" role="img" aria-label="Variação percentual de ${series.map(s => esc(s.titulo)).join(', ')}">
+    <g class="grid"><line x1="${X0}" y1="${g[0]}" x2="${X1}" y2="${g[0]}"/><line x1="${X0}" y1="${g[1]}" x2="${X1}" y2="${g[1]}"/></g>
+    <line class="zero" x1="${X0}" y1="${y(0)}" x2="${X1}" y2="${y(0)}"/>
+    ${linhas}
+    <g class="axis-label">${y(0) - g[0] > 13 ? `<text x="${X0 - 8}" y="${g[0] + 3}" text-anchor="end">${sinal(hi, casas)}</text>` : ''}<text x="${X0 - 8}" y="${y(0) + 3}" text-anchor="end">0%</text>${g[1] - y(0) > 13 ? `<text x="${X0 - 8}" y="${g[1] + 3}" text-anchor="end">${sinal(lo, casas)}</text>` : ''}
+    ${t1 > t0 ? `<text x="${X0}" y="184">${fmtEixo(todos.sort((a, b) => T(a) - T(b))[0].d)}</text><text x="${X1}" y="184" text-anchor="end">${fmtEixo(todos[todos.length - 1].d)}</text>` : `<text x="${(X0 + X1) / 2}" y="184" text-anchor="middle">${fmtEixo(todos[0].d)}</text>`}</g></svg>`;
+}
+/* ---------- comparar duas datas ---------- */
+const tCorpo = x => new Date(x.data + 'T00:00:00').getTime();
+function cmpNearest(L, B, dias) {
+  const alvo = tCorpo(B) - dias * 864e5;
+  return L.filter(x => x.id !== B.id).reduce((m, x) => !m || Math.abs(tCorpo(x) - alvo) < Math.abs(tCorpo(m) - alvo) ? x : m, null);
+}
+function cmpResolve(L) {
+  const B = L.find(x => x.id === cmpB) || L[L.length - 1];
+  const A = L.find(x => x.id === cmpA && x.id !== B.id) || cmpNearest(L, B, 90);
+  return tCorpo(A) <= tCorpo(B) ? [A, B] : [B, A];
+}
+const dataLonga = iso => { const [y, m, d] = iso.split('-'); return `${+d} ${MES_CURTO[+m - 1]} ${y}`; };
+function cmpSecao(L) {
+  if (L.length < 2) return `<section class="body-sec"><div class="section-heading compact"><h2>Comparar datas</h2></div><p class="hint">Registre pelo menos duas medidas para comparar duas datas.</p></section>`;
+  const [A, B] = cmpResolve(L), dias = Math.round((tCorpo(B) - tCorpo(A)) / 864e5);
+  const opc = sel => L.slice().reverse().map(x => `<option value="${x.id}" ${x.id === sel.id ? 'selected' : ''}>${dataLonga(x.data)}</option>`).join('');
+  const ordem = ['peso', 'imc', 'gkg', 'gordura', 'magra', 'musculo', 'agua', 'visceral', 'ossea', 'proteina', 'bmr'];
+  const linhas = ordem.map(k => {
+    const m = metr(k), a = corpoVal(A, k), b = corpoVal(B, k); if (!(a > 0) && !(b > 0)) return '';
+    const un = m.u === '%' ? 'p.p.' : m.u, nome = m.t ? m.t.replace(/ \((kg|%)\)/, k === 'gkg' ? ' em kg' : ' em %') : m.nome;
+    let dif = '–', pct = '', vals = `${a > 0 ? fmtC(k, a) : '–'} → ${b > 0 ? fmtC(k, b) : '–'}${m.u ? ' ' + m.u : ''}`;
+    if (a > 0 && b > 0) {
+      const d = b - a, zero = Math.abs(d) < Math.pow(10, -m.dec) / 2;
+      dif = zero ? 'igual' : (d > 0 ? '+' : '−') + fmtC(k, Math.abs(d)) + (un ? ' ' + un : '');
+      if (!zero) pct = sinal((b / a - 1) * 100, 1);
+    }
+    return `<div class="cmp-row"><b>${esc(nome)}</b><strong>${dif}</strong><span>${vals}</span><span class="pct">${pct}</span></div>`;
+  }).join('');
+  return `<section class="body-sec"><div class="section-heading compact"><h2>Comparar datas</h2><span>${plural(dias, 'dia', 'dias')}</span></div><div class="chart-card cmp-card">
+    <div class="cmp-selects"><div><label for="cmp-a">De</label><select id="cmp-a" data-bind="cmp-a">${opc(A)}</select></div><div><label for="cmp-b">Até</label><select id="cmp-b" data-bind="cmp-b">${opc(B)}</select></div></div>
+    <div class="period" style="margin:12px 0 4px">${[[30, '1 mês atrás'], [90, '3 meses atrás'], [180, '6 meses atrás'], [365, '1 ano atrás']].map(([d, n]) => `<button type="button" data-act="cmp-preset" data-d="${d}">${n}</button>`).join('')}</div>
+    <p class="hint" style="margin:0 4px 6px">Os atalhos escolhem a medida mais próxima daquela data, antes da data "Até".</p>
+    <div class="cmp-rows">${linhas}</div></div></section>`;
+}
+function vCorpo() {
+  const L = corpoLista();
+  let h = cabecalho({ eyebrow: 'SEU CORPO', titulo: 'Corpo' });
+  const novo = `<a class="primary-button bottom-action" href="#/corpo-medida/novo">${ic('plus')} Registrar medida</a>`;
+  if (!L.length) return h + `<div class="vazio"><strong>Nenhuma medida ainda.</strong><p>Cole o texto da imagem do Zepp Life ou digite os valores da sua última pesagem.</p>${novo.replace(' bottom-action', '')}</div>`;
+  const u = L[L.length - 1], a = L[L.length - 2];
+  const dPeso = a ? deltaTxt('peso', u.peso, a.peso) : '';
+  const imc = corpoVal(u, 'imc'), dImc = a ? deltaTxt('imc', imc, corpoVal(a, 'imc')) : '';
+  const imcBtn = imc > 0 ? `<button type="button" class="hero-imc ${corpoSel.includes('imc') ? 'on' : ''}" data-act="corpo-metrica" data-k="imc" aria-pressed="${corpoSel.includes('imc')}" aria-label="IMC no gráfico"><span>IMC</span><b>${fmtC('imc', imc)}</b><small>${dImc || '&nbsp;'}</small></button>` : '';
+  h += `<section class="body-hero ${corpoSel.includes('peso') ? 'on' : ''}"><div class="top"><button type="button" class="hero-peso" data-act="corpo-metrica" data-k="peso" aria-pressed="${corpoSel.includes('peso')}" aria-label="Peso no gráfico"><span class="k">PESO</span><span class="v">${fmtC('peso', u.peso)}<small>kg</small></span></button>${imcBtn}</div><div class="d">${dPeso ? `<b>${dPeso} kg</b>` : ''}${a ? `desde ${fmtData(a.data).toLowerCase()} · ` : ''}${fmtData(u.data).toLowerCase()}${u.origem === 'saude' ? ' · do Saúde' : ''}</div></section>`;
+  const linha1 = ['gordura', 'musculo'].map(k => metricaCard(k, u, a)).join('');
+  if (linha1) h += `<div class="metric-grid two">${linha1}</div>`;
+  const linha2 = ['magra', 'agua', 'visceral', 'ossea', 'proteina', 'bmr'].map(k => metricaCard(k, u, a)).join('');
+  if (linha2) h += `<div class="metric-grid">${linha2}</div>`;
+  h += '<p class="hint" style="margin:10px 4px 0">Toque em uma ou mais medidas para ver a evolução delas no gráfico.</p>';
+  const lim = corpoPeriodo ? Date.now() - corpoPeriodo * 864e5 : 0, dentro = L.filter(x => new Date(x.data + 'T00:00:00').getTime() >= lim);
+  const series = corpoSel.map(k => {
+    const kk = chaveSerie(k), m = metr(kk);
+    return { k, kk, m, titulo: m.t || m.nome, pts: dentro.filter(x => corpoVal(x, kk) > 0).map(x => ({ d: x.data, v: Number(corpoVal(x, kk).toFixed(2)) })) };
+  });
+  const com = series.filter(x => x.pts.length), unico = series.length === 1;
+  const un = corpoSel.includes('gordura') ? `<div class="period" style="margin:8px 4px 0">${[['gordura', 'Gordura em %'], ['gkg', 'Gordura em kg']].map(([k, n]) => `<button type="button" data-act="corpo-gordura-un" data-k="${k}" class="${corpoGordUn === k ? 'on' : ''}">${n}</button>`).join('')}</div>` : '';
+  let corpo;
+  if (!com.length) corpo = '<p class="hint" style="padding:22px 6px">Sem dados dessa medida no período escolhido.</p>';
+  else if (unico) corpo = graficoLinha(com[0].pts, com[0].m.u, com[0].titulo);
+  else corpo = graficoMulti(com);
+  const titulo = unico ? series[0].m.t || series[0].m.nome + (series[0].m.u ? ' (' + series[0].m.u + ')' : '') : 'Comparar medidas';
+  const legenda = unico ? '' : `<p class="hint" style="margin:0 4px 6px">Variação em % desde o início do período, para comparar medidas de unidades diferentes.</p><div class="legend">${series.map(x => {
+    const p = x.pts, ult = p.length ? p[p.length - 1].v : 0, vr = p.length > 1 ? sinal((ult / p[0].v - 1) * 100, 1) : '';
+    return `<span class="${p.length ? '' : 'sem'}"><i style="background:var(--c-${x.k})"></i><b>${esc(x.titulo)}</b> ${p.length ? fmtC(x.kk, ult) + (x.m.u ? ' ' + x.m.u : '') + (vr ? ' · ' + vr : '') : 'sem dados'}</span>`;
+  }).join('')}</div>`;
+  h += `<section class="body-sec"><div class="chart-card"><div class="chart-title"><span class="chart-name">${esc(titulo)}</span></div>${un}${corpo}
+    <div class="period">${[[30, '30 dias'], [90, '90 dias'], [365, '1 ano'], [0, 'Tudo']].map(([d, n]) => `<button type="button" data-act="corpo-periodo" data-d="${d}" class="${corpoPeriodo === d ? 'on' : ''}">${n}</button>`).join('')}</div>${legenda}</div></section>`;
+  h += cmpSecao(L);
+  h += `<section class="body-sec"><div class="section-heading compact"><h2>Histórico</h2><span>${plural(L.length, 'medida', 'medidas')}</span></div><div class="hist-rows">${L.slice().reverse().slice(0, 15).map(x => `<a class="hist-row" href="#/corpo-medida/${x.id}"><b>${fmtData(x.data)}</b><span>${fmtC('peso', x.peso)} kg</span><span>${x.gordura > 0 ? fmtC('gordura', x.gordura) + ' %' : '–'}</span></a>`).join('')}</div></section>`;
+  return h + novo;
+}
+function vCorpoMedida(r) {
+  const novo = r.a === 'novo', x = novo ? { data: hoje() } : S.corpo.find(c => c.id === r.a && !c.del);
+  if (!x) return naoEncontrado('Medida');
+  const v = k => x[k] > 0 ? fmt(x[k]) : '';
+  const campo = (id, rot, k, extra = '') => `<div><label for="c-${id}">${rot}</label><input id="c-${id}" inputmode="decimal" autocomplete="off" value="${v(k)}" ${extra}></div>`;
+  let h = cabecalho({ titulo: novo ? 'Nova medida' : 'Medida', voltarBtn: true });
+  if (novo) h += `<section class="exercise-form-card" style="margin-bottom:20px"><label for="z-text">Colar do Zepp Life</label><textarea id="z-text" class="zepp-text" placeholder="Cole aqui o texto copiado da imagem"></textarea>
+    <button type="button" class="settings-primary-action sec" style="margin-top:12px" data-act="zepp-preencher">Preencher os campos</button>
+    <p class="connection-status" id="z-status" hidden><span class="dot"></span><span class="txt"></span></p>
+    <p class="hint">Em Fotos, abra a imagem do Zepp Life, segure o dedo sobre o texto, toque em Selecionar tudo e depois em Copiar. Volte aqui e cole.</p></section>`;
+  h += `<section class="exercise-form-card"><label for="c-data">Data</label><input id="c-data" type="date" value="${esc(x.data)}"><div class="form-grid-two" style="margin-top:18px">
+    ${campo('peso', 'Peso (kg)', 'peso')}${campo('gordura', 'Gordura corporal (%)', 'gordura')}${campo('musculo', 'Músculo (kg)', 'musculo')}${campo('agua', 'Água (%)', 'agua')}
+    ${campo('visceral', 'Gordura visceral', 'visceral')}${campo('ossea', 'Massa óssea (kg)', 'ossea')}${campo('proteina', 'Proteína (%)', 'proteina')}${campo('bmr', 'Metabolismo basal (kcal)', 'bmr')}
+    ${campo('imc', 'IMC (opcional)', 'imc')}</div><p class="hint">Só o peso é obrigatório. Sem IMC, o app calcula com a sua altura (em Ajustes). A gordura em kg e a massa magra são calculadas com peso e percentual de gordura.</p></section>`;
+  if (!novo) h += `<div class="danger-zone"><button type="button" data-act="pedir-excluir" data-alvo="medida" data-eid="${x.id}">${ic('trash', 20)} Excluir medida</button></div>`;
+  return h + `<button type="button" class="primary-button bottom-action" data-act="salvar-medida" data-id="${novo ? 'novo' : x.id}">${ic('check')} Salvar medida</button>`;
+}
+/* Atalho do iPhone: abre o app com os valores no endereço. Ex.: #/importar/peso=68.4&gordura=22.4 */
+function numImport(v) {
+  const t = String(v || ''), n = num((t.match(/\d+(?:[.,]\d+)?/) || [''])[0]);
+  return /lb|libra/i.test(t) ? n * 0.45359 : n;
+}
+function vImportar(r) {
+  const q = new URLSearchParams(r.a || ''), peso = numImport(q.get('peso'));
+  if (!(peso > 0)) return cabecalho({ titulo: 'Importar medidas', voltarBtn: true }) + `<div class="vazio"><p>Não recebi o peso. Confira o atalho: o endereço precisa ter <b>peso=</b> com o valor.</p><a class="primary-button" href="#/corpo">Ir para Corpo</a></div>`;
+  const c = { data: /^\d{4}-\d{2}-\d{2}$/.test(q.get('data') || '') ? q.get('data') : hoje(), peso: Number(peso.toFixed(2)) };
+  let g = numImport(q.get('gordura')); if (g > 0 && g <= 1) g *= 100;
+  if (g > 0) c.gordura = Number(g.toFixed(2));
+  for (const k of ['musculo', 'agua', 'visceral', 'ossea', 'proteina', 'bmr', 'imc']) { const n = numImport(q.get(k)); if (n > 0) c[k] = n; }
+  const antigo = S.corpo.find(x => !x.del && x.data === c.data);
+  upsertCorpo({ ...(antigo ? { ...antigo } : {}), ...c }, 'saude', antigo && antigo.id);
+  setTimeout(() => { location.replace('#/corpo'); toast('Medidas importadas'); }, 0);
+  return cabecalho({ titulo: 'Importando…' });
+}
+function corpoAjustesCard() {
+  const base = location.href.split('#')[0] + '#/importar/', alt = S.plan.altura > 0 ? fmt(S.plan.altura) : '';
+  return `<section class="settings-section"><div class="settings-section-heading"><span class="settings-section-icon">${ic('body', 20)}</span><div><h2>Corpo e balança</h2><p>A altura serve para calcular o IMC quando a medida não trouxer esse valor.</p></div></div>
+    <div class="sync-form"><label for="a-alt">Sua altura (cm)</label><input id="a-alt" data-bind="altura" inputmode="decimal" placeholder="Ex.: 172" value="${alt}"></div>
+    <p class="hint" style="margin:14px 2px 8px"><b>Importar do Saúde (opcional).</b> No app Atalhos, crie um atalho que lê o Peso e o Percentual de gordura corporal mais recentes do Saúde e abre este endereço com os valores:</p>
+    <button type="button" class="reminder-url" data-act="copiar-url" data-url="${esc(base)}"><span>${esc(base)}peso=…&amp;gordura=…</span><span>${ic('copy', 19)} Copiar</span></button>
+    <p class="hint" style="margin:12px 2px 0">O atalho abre o Safari, não o app da tela de início. Entre com a sua conta em Ajustes uma vez no Safari: a medida importada sincroniza e aparece no app.</p></section>`;
+}
+
 /* ---------- Ajustes ---------- */
 function temaCard() {
   const nomes = { auto: 'Automático, segue o iPhone', light: 'Claro', dark: 'Escuro' };
@@ -694,7 +1016,8 @@ const urlApp = () => location.href.split('#')[0] + '#/hoje';
 function vAjustes() {
   const logado = !!sync.access;
   const msg = syncMsg || (logado ? `Conectado como ${sync.email || ''}.` : 'Não conectado: os dados ficam só neste aparelho.');
-  return `${cabecalho({ eyebrow: 'PREFERÊNCIAS', titulo: 'Ajustes' })}<div class="settings-intro">Sincronização, backup e lembrete</div>${temaCard()}
+  return `${cabecalho({ eyebrow: 'PREFERÊNCIAS', titulo: 'Ajustes' })}<div class="settings-intro">Sincronização, backup e lembrete</div>${temaCard()}${somCard()}
+  ${corpoAjustesCard()}
   <section class="settings-section"><div class="settings-section-heading"><span class="settings-section-icon">${ic('lock', 20)}</span><div><h2>Sincronizar iPhone e iPad</h2><p>Use o mesmo projeto Supabase e a mesma conta nos dois aparelhos. O passo a passo está no arquivo LEIA-ME.</p></div></div>
     <div class="sync-form"><label for="s-url">URL do projeto</label><input id="s-url" inputmode="url" placeholder="https://xxxx.supabase.co" value="${esc(sync.url || '')}" autocapitalize="off" autocorrect="off" spellcheck="false">
       <label for="s-key">Chave anon (pública)</label><input id="s-key" value="${esc(sync.key || '')}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
@@ -707,12 +1030,20 @@ function vAjustes() {
     <div class="backup-actions"><button type="button" data-act="exportar">${ic('download', 19)} Exportar backup</button><label for="imp">${ic('upload', 19)} Importar backup<input id="imp" type="file" accept="application/json"></label></div></section>
   <section class="settings-section"><div class="settings-section-heading"><span class="settings-section-icon">${ic('calendar', 20)}</span><div><h2>Lembrete ao chegar na academia</h2><p>Crie uma automação no app Atalhos para abrir o treino ao chegar.</p></div></div>
     <ol class="shortcut-steps"><li>Abra Atalhos → Automação → Nova automação</li><li>Escolha “Chegada” e selecione a academia</li><li>Adicione “Abrir URLs” usando o endereço abaixo</li><li>Desligue “Perguntar antes de executar”</li></ol>
-    <button type="button" class="reminder-url" data-act="copiar-url"><span>${esc(urlApp())}</span><span>${ic('copy', 19)} Copiar</span></button></section>`;
+    <button type="button" class="reminder-url" data-act="copiar-url"><span>${esc(urlApp())}</span><span>${ic('copy', 19)} Copiar</span></button>
+    <p class="hint" style="margin:12px 2px 0">A automação abre o endereço no Safari, que guarda os dados separados do app da tela de início. Abra este mesmo endereço no Safari uma vez e entre com a sua conta em Ajustes. Depois disso, tudo aparece igual nos dois.</p></section>`;
 }
 
 /* ---------- descanso entre séries ---------- */
 let restFim = 0, restTotal = 0, restId = null, audioCtx = null;
 let beepEl = null, wake = null;
+const SOM_KEY = 'treino-app-som';
+let somModo = lsGet(SOM_KEY) === 'silencioso' ? 'silencioso' : 'misturar';
+function somCard() {
+  const txt = somModo === 'misturar' ? 'Toca junto com Spotify e outros apps. No modo silencioso do iPhone, o aviso fica mudo.' : 'O aviso toca mesmo no modo silencioso, mas pausa a música do Spotify.';
+  return `<section class="settings-card sound-card"><div class="settings-card-row"><span class="machine-icon">${ic('clock', 22)}</span><div><strong>Som do timer</strong><p>${txt}</p></div></div>
+    <div class="seg" role="group" aria-label="Som do timer">${[['misturar', 'Junto com a música'], ['silencioso', 'Mesmo no silencioso']].map(([v, n]) => `<button type="button" data-act="som" data-v="${v}" aria-pressed="${somModo === v}">${n}</button>`).join('')}</div></section>`;
+}
 function wavBeep() {
   const sr = 22050, n = Math.floor(sr * 1.4), buf = new ArrayBuffer(44 + n * 2), v = new DataView(buf);
   const w = (o, t) => { for (let i = 0; i < t.length; i++) v.setUint8(o + i, t.charCodeAt(i)); };
@@ -727,7 +1058,7 @@ function wavBeep() {
 }
 /* Chamado num toque do usuário: deixa o som liberado e tocando mesmo no modo silencioso do iPhone. */
 function prepararSom() {
-  try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {}
+  try { if (navigator.audioSession) navigator.audioSession.type = somModo === 'silencioso' ? 'playback' : 'ambient'; } catch (e) {}
   try {
     if (!beepEl) { beepEl = new Audio(wavBeep()); beepEl.preload = 'auto'; }
     beepEl.muted = true;
@@ -852,7 +1183,7 @@ const acoes = {
     const sec = b.closest('.class-log'), sel = $('#sentir .selected', sec);
     const dados = { duracao: Math.round(num($('[data-campo=duracao]', sec).value)), sentir: sel ? parseInt(sel.dataset.v, 10) : 0, nota: $('#aula-nota', sec).value.trim(), t: Date.now() };
     const a = S.aulas.find(x => x.data === hoje());
-    if (a) Object.assign(a, dados); else S.aulas.push({ id: uid(), data: hoje(), ...dados });
+    if (a) Object.assign(a, dados, { del: false }); else S.aulas.push({ id: uid(), data: hoje(), ...dados });
     salvar(); toast('Aula registrada'); renderManter();
   },
   'novo-treino'() { const t = { id: uid(), nome: 'Novo treino', frente: 'Musculação', dias: [], exercicios: [] }; S.plan.treinos.push(t); tocarPlano(); salvar(); location.hash = '#/editar/' + t.id; },
@@ -865,9 +1196,11 @@ const acoes = {
     tocarPlano(); salvar(); toast('Treino salvo'); voltar();
   },
   'pedir-excluir'(b) {
-    const z = b.closest('.danger-zone'), treino = b.dataset.alvo === 'treino';
+    const z = b.closest('.danger-zone'), alvo = b.dataset.alvo;
+    const msg = alvo === 'treino' ? 'Excluir este treino e os exercícios dele? Os registros já feitos continuam guardados.' : alvo === 'medida' ? 'Excluir esta medida do corpo?' : alvo === 'aula' ? 'Excluir esta aula?' : 'Excluir este exercício?';
+    const act = alvo === 'treino' ? 'excluir-treino' : alvo === 'medida' ? 'excluir-medida' : alvo === 'aula' ? 'excluir-aula' : 'excluir-ex';
     z.classList.add('confirmando');
-    z.innerHTML = `<p>${treino ? 'Excluir este treino e os exercícios dele? Os registros já feitos continuam guardados.' : 'Excluir este exercício?'}</p><div class="confirm-btns"><button type="button" class="ghost" data-act="cancelar-excluir">Cancelar</button><button type="button" class="danger" data-act="${treino ? 'excluir-treino' : 'excluir-ex'}" data-tid="${b.dataset.tid}" data-eid="${b.dataset.eid || ''}">Excluir</button></div>`;
+    z.innerHTML = `<p>${msg}</p><div class="confirm-btns"><button type="button" class="ghost" data-act="cancelar-excluir">Cancelar</button><button type="button" class="danger" data-act="${act}" data-tid="${b.dataset.tid || ''}" data-eid="${b.dataset.eid || ''}">Excluir</button></div>`;
   },
   'cancelar-excluir'() { renderManter(); },
   'excluir-treino'(b) { S.plan.treinos = S.plan.treinos.filter(t => t.id !== b.dataset.tid); tocarPlano(); salvar(); toast('Treino excluído'); location.replace('#/treinos'); },
@@ -885,9 +1218,10 @@ const acoes = {
     tocarPlano(); salvar(); toast(novo ? 'Exercício adicionado' : 'Exercício salvo'); voltar();
   },
   'chip-passo'(b) { const i = $('#x-passo'); i.value = fmt(num(b.dataset.v)); marcarChips(); },
+  som(b) { somModo = b.dataset.v === 'silencioso' ? 'silencioso' : 'misturar'; lsSet(SOM_KEY, somModo); const c = $('.sound-card'); if (c) c.outerHTML = somCard(); },
   tema(b) { temaPref = b.dataset.v; lsSet(TEMA_KEY, temaPref); aplicarTema(); const c = $('.theme-card'); if (c) c.outerHTML = temaCard(); },
   async 'copiar-url'(b) {
-    const url = urlApp(); let ok = false;
+    const url = b.dataset.url || urlApp(); let ok = false;
     try { await navigator.clipboard.writeText(url); ok = true; } catch (e) {
       try { const ta = document.createElement('textarea'); ta.value = url; document.body.appendChild(ta); ta.select(); ok = document.execCommand('copy'); ta.remove(); } catch (e2) {}
     }
@@ -921,6 +1255,39 @@ const acoes = {
     if (c) { c.del = true; c.t = Date.now(); salvar(); }
     renderManter();
   },
+  'corpo-metrica'(b) { const k = b.dataset.k, i = corpoSel.indexOf(k); if (i >= 0) { if (corpoSel.length > 1) corpoSel.splice(i, 1); } else corpoSel.push(k); renderManter(); },
+  'corpo-gordura-un'(b) { corpoGordUn = b.dataset.k; renderManter(); },
+  'cmp-preset'(b) {
+    const L = corpoLista(); if (L.length < 2) return;
+    const [, B] = cmpResolve(L), A = cmpNearest(L, B, parseInt(b.dataset.d, 10));
+    cmpA = A.id; cmpB = B.id; renderManter();
+  },
+  'corpo-periodo'(b) { corpoPeriodo = parseInt(b.dataset.d, 10); renderManter(); },
+  'zepp-preencher'() {
+    const r = parseZepp($('#z-text').value), ids = { peso: 'c-peso', gordura: 'c-gordura', musculo: 'c-musculo', agua: 'c-agua', visceral: 'c-visceral', ossea: 'c-ossea', proteina: 'c-proteina', bmr: 'c-bmr', imc: 'c-imc' };
+    let n = 0; for (const [k, id] of Object.entries(ids)) if (r[k] > 0) { $('#' + id).value = fmt(r[k]); n++; }
+    if (r.data) $('#c-data').value = r.data;
+    const st = $('#z-status'); st.hidden = false; st.className = 'connection-status ' + (n ? 'connected' : 'erro');
+    $('.txt', st).textContent = n ? `${plural(n, 'valor preenchido', 'valores preenchidos')}${r.data ? ' e a data' : ''}. Confira antes de salvar.` : 'Não encontrei medidas nesse texto. Confira se copiou a imagem inteira.';
+  },
+  'salvar-medida'(b) {
+    const g = id => { const v = num($('#' + id).value); return v > 0 ? v : 0; };
+    const c = { data: $('#c-data').value || hoje(), peso: g('c-peso'), gordura: g('c-gordura'), musculo: g('c-musculo'), agua: g('c-agua'), visceral: g('c-visceral'), ossea: g('c-ossea'), proteina: g('c-proteina'), bmr: g('c-bmr'), imc: g('c-imc') };
+    if (!(c.peso > 0)) { toast('Informe o peso'); return; }
+    upsertCorpo(c, 'manual', b.dataset.id === 'novo' ? null : b.dataset.id);
+    toast('Medida salva'); location.replace('#/corpo');
+  },
+  'salvar-aula-ed'(b) {
+    const data = $('#a-data').value || hoje(), sel = $('#sentir .selected'), id = b.dataset.id === 'novo' ? null : b.dataset.id;
+    if (data > hoje()) { toast('A data não pode ser no futuro'); return; }
+    if (S.aulas.some(x => !x.del && x.data === data && x.id !== id)) { toast('Já existe uma aula nesta data. Edite aquela.'); return; }
+    const dados = { data, duracao: Math.round(num($('[data-campo=duracao]').value)), sentir: sel ? parseInt(sel.dataset.v, 10) : 0, nota: $('#aula-nota').value.trim(), t: Date.now(), del: false };
+    const a = id && S.aulas.find(x => x.id === id);
+    if (a) Object.assign(a, dados); else S.aulas.push({ id: uid(), ...dados });
+    salvar(); toast('Aula salva'); location.replace('#/aulas');
+  },
+  'excluir-aula'(b) { const a = S.aulas.find(x => x.id === b.dataset.eid); if (a) { a.del = true; a.t = Date.now(); salvar(); } toast('Aula excluída'); location.replace('#/aulas'); },
+  'excluir-medida'(b) { const m = S.corpo.find(x => x.id === b.dataset.eid); if (m) { m.del = true; m.t = Date.now(); salvar(); } toast('Medida excluída'); location.replace('#/corpo'); },
   async 'trocar-senha'() {
     const n1 = $('#n-pass').value, n2 = $('#n-pass2').value;
     const st = (msg, tipo) => { const el = $('#senha-status'); el.hidden = false; el.className = 'connection-status ' + (tipo || ''); $('.txt', el).textContent = msg; };
@@ -949,7 +1316,12 @@ document.addEventListener('change', e => {
   const el = e.target, k = el.dataset && el.dataset.bind;
   if (el.id === 'imp') { importar(el.files[0]); el.value = ''; return; }
   if (el.classList.contains('cnt-input')) { el.value = fmt(Math.max(0, num(el.value))); ajustarLargura(el); aoMudarCampo(el); return; }
+  if (k === 'cmp-a' || k === 'cmp-b') {
+    const L = corpoLista(); if (k === 'cmp-a') cmpA = el.value; else cmpB = el.value;
+    const [A, B] = cmpResolve(L); cmpA = A.id; cmpB = B.id; renderManter(); return;
+  }
   if (k === 'evo-ex') { location.hash = '#/evolucao/' + el.value; return; }
+  if (k === 'altura') { let a = num(el.value); if (a > 0 && a < 3) a *= 100; S.plan.altura = Math.max(0, Math.round(a)); el.value = S.plan.altura ? fmt(S.plan.altura) : ''; tocarPlano(); salvar(); }
   if (k === 't-nome') { const t = treinoPorId(el.dataset.tid); if (t) { t.nome = el.value.trim() || 'Treino'; tocarPlano(); salvar(); } }
   if (k === 't-frente') { const t = treinoPorId(el.dataset.tid); if (t) { t.frente = el.value; tocarPlano(); salvar(); renderManter(); } }
 });
@@ -969,7 +1341,7 @@ function importar(file) {
       const d = JSON.parse(rd.result);
       if (!d.plan || !Array.isArray(d.plan.treinos)) throw 0;
       if (!confirm('Substituir os dados deste aparelho pelo backup?')) return;
-      d.logs = d.logs || []; d.aulas = d.aulas || []; d.conclusoes = d.conclusoes || []; d.plan.meta = d.plan.meta > 0 ? d.plan.meta : 12;
+      d.logs = d.logs || []; d.aulas = d.aulas || []; d.conclusoes = d.conclusoes || []; d.corpo = d.corpo || []; d.plan.meta = d.plan.meta > 0 ? d.plan.meta : 12;
       S = d; salvar(); location.hash = '#/hoje'; render();
     } catch (e) { alert('Arquivo de backup inválido.'); }
   };
@@ -998,7 +1370,7 @@ const cab = () => ({ apikey: sync.key, Authorization: 'Bearer ' + sync.access, '
 function mesclar(remoto) {
   if (!remoto || !remoto.plan) return;
   if ((remoto.plan.updatedAt || 0) > (S.plan.updatedAt || 0)) S.plan = { ...remoto.plan, meta: remoto.plan.meta > 0 ? remoto.plan.meta : 12 };
-  for (const campo of ['logs', 'aulas', 'conclusoes']) {
+  for (const campo of ['logs', 'aulas', 'conclusoes', 'corpo']) {
     const mapa = new Map((S[campo] || []).map(x => [x.id, x]));
     for (const x of remoto[campo] || []) { const l = mapa.get(x.id); if (!l || (x.t || 0) > (l.t || 0)) mapa.set(x.id, x); }
     S[campo] = [...mapa.values()];
